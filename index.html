@@ -4,7 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archanid Bot - Your Ultimate Discord Assistant</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #2f3136;
+            color: white;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-buttons .button {
+            background-color: #5865F2;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+        #hero {
+            text-align: center;
+            padding: 2em;
+            background-color: #5865F2;
+            color: white;
+        }
+        #commands {
+            padding: 2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .command-category {
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 1em;
+            padding: 1em;
+            cursor: pointer;
+        }
+        .command-category h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .new-tag {
+            background-color: #ff4500;
+            color: white;
+            padding: 0.2em 0.5em;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+        .dropdown {
+            max-height: 0;
+            overflow-y: auto;
+            transition: max-height 0.3s ease-out;
+        }
+        .command-category[aria-expanded="true"] .dropdown {
+            max-height: 200px; /* Scrollable height */
+        }
+        .dropdown li {
+            margin: 0.5em 0;
+        }
+        footer {
+            text-align: center;
+            padding: 1em;
+            background-color: #2f3136;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -25,73 +108,191 @@
         </section>
         <section id="commands">
             <h2>Commands</h2>
-            <div class="command-category" tabindex="0">
-                <h3>Music Commands<span class="new-tag">NEW</span></h3>
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Credits & Donate</h3>
                 <ul class="dropdown">
-                    <li><code>$play &lt;song name&gt;</code> - Play a song or add it to queue</li>
-                    <li><code>$stop</code> - Stop playing and clear the queue</li>
-                    <li><code>$skip</code> - Skip the current song</li>
-                    <li><code>$queue</code> - Show the current music queue</li>
-                    <li><code>$pause</code> - Pause the current song</li>
-                    <li><code>$resume</code> - Resume the paused song</li>
+                    <li><code>$credits</code> - See the bot's credits and developers 🌟</li>
+                    <li><code>$donate</code> - Support the bot's development! 💖</li>
                 </ul>
             </div>
-            <div class="command-category" tabindex="0">
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Text Chat</h3>
+                <ul class="dropdown">
+                    <li><code>$call</code> - Start a text chat bridge with another server 📨</li>
+                    <li><code>$hangup</code> - End a text chat bridge or remove from queue 📴</li>
+                </ul>
+            </div>
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Music Commands</h3>
+                <ul class="dropdown">
+                    <li><code>$play <song name></code> - Play a song or add it to queue 🎶</li>
+                    <li><code>$stop</code> - Stop playing and clear the queue ⏹️</li>
+                    <li><code>$skip</code> - Skip the current song ⏭️</li>
+                    <li><code>$queue [page]</code> - Show the current music queue (paginated) 📜</li>
+                    <li><code>$pause</code> - Pause the current song ⏸️</li>
+                    <li><code>$resume</code> - Resume the paused song ▶️</li>
+                    <li><code>$nowplaying</code> - Show the currently playing song 🎵</li>
+                    <li><code>$volume <0-100></code> - Set the playback volume 🔊</li>
+                    <li><code>$seek <seconds></code> - Seek to a specific time in the current song ⏩</li>
+                    <li><code>$loop</code> - Toggle looping the current song 🔁</li>
+                    <li><code>$shuffle</code> - Shuffle the current queue 🔀</li>
+                    <li><code>$remove <position></code> - Remove a song from the queue by its position ❌</li>
+                    <li><code>$radioplay <genre></code> - Play a radio station by genre 📻</li>
+                    <li><code>$radio <genre></code> - Play a radio station by genre 📻</li>
+                    <li><code>$playlist</code> - Playlist support (create/view/play) 🎶</li>
+                    <li><code>$lyrics <song></code> - Get lyrics for a song 🎤</li>
+                    <li><code>$sfx <effect></code> - Play a sound effect in voice 🔊</li>
+                </ul>
+            </div>
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Last.fm Commands<span class="new-tag">NEW</span></h3>
+                <ul class="dropdown">
+                    <li><code>$fm link <username></code> - Link your Last.fm account 🎵</li>
+                    <li><code>$fm now</code> - Show your currently playing track 🎧</li>
+                    <li><code>$fm recent</code> - List your recently played tracks (paginated) 📜</li>
+                    <li><code>$fm toptracks</code> - Show your top tracks (paginated) 🏆</li>
+                    <li><code>$fm topartists</code> - Show your top artists (paginated) 🌟</li>
+                    <li><code>$fm c <row x column></code> - Generate a collage for top albums 🖼️</li>
+                    <li><code>$fm iceberg</code> - See your top artists from top to bottom 🧊</li>
+                    <li><code>$fm cover [album]</code> - Show cover for current or searched album 🖼️</li>
+                    <li><code>$fm abc [album]</code> - Alias for cover (album cover) 🖼️</li>
+                    <li><code>$fm artistchart</code> - Generate an artist image chart (3x3) 🖼️</li>
+                    <li><code>$fm ac</code> - Alias for artistchart (artist chart) 🖼️</li>
+                    <li><code>$fm compare @user</code> - Compare Last.fm music tastes with another user 🎵</li>
+                    <li><code>$fm whoknows <artist></code> - See who in the server listens to an artist 👀</li>
+                    <li><code>$fm w <artist></code> - Alias for whoknows 👀</li>
+                    <li><code>$fm artistplays [artist]</code> - Show playcount for current or searched artist 🔢</li>
+                    <li><code>$fm ap [artist]</code> - Alias for artistplays 🔢</li>
+                    <li><code>$fm artistoverview [artist]</code> - Show info for current or searched artist 📖</li>
+                    <li><code>$fm ao [artist]</code> - Alias for artistoverview 📖</li>
+                    <li><code>$fm year</code> - Show an overview of your year in music 📅</li>
+                    <li><code>$fm yr</code> - Alias for year 📅</li>
+                    <li><code>$fm overview</code> - Show a weekly overview of your music 📊</li>
+                    <li><code>$fm o</code> - Alias for overview 📊</li>
+                </ul>
+            </div>
+            <div class="command-category" tabindex="0" aria-expanded="false">
                 <h3>Admin Commands</h3>
                 <ul class="dropdown">
-                    <li><code>$setprefix &lt;new_prefix&gt;</code> - Change the server prefix</li>
-                    <li><code>$add @user &lt;amount&gt;</code> - Add coins to user's balance</li>
-                    <li><code>$banbot @user</code> - Ban user from using bot</li>
-                    <li><code>$unbanbot @user</code> - Unban user from bot</li>
-                    <li><code>$ban @user [time]</code> - Ban user from server</li>
-                    <li><code>$kick @user</code> - Kick user from server</li>
-                    <li><code>$mute @user [time]</code> - Mute a user</li>
-                    <li><code>$unmute @user</code> - Unmute a user</li>
-                    <li><code>$purge &lt;amount&gt;</code> - Delete messages</li>
-                    <li><code>$r @user &lt;role&gt;</code> - Add role to user</li>
+                    <li><code>$autoreact add <trigger> <emoji></code> - Auto-react to messages with emoji 🔧</li>
+                    <li><code>$autoreact remove <trigger></code> - Remove an auto-react rule 🗑️</li>
+                    <li><code>$autoreact list</code> - List all auto-react rules 📋</li>
+                    <li><code>$setprefix <new_prefix></code> - Change the server prefix 🔧</li>
+                    <li><code>$add @user <amount></code> - Add coins to user's balance 💸</li>
+                    <li><code>$banbot @user</code> - Ban user from using bot 🚫</li>
+                    <li><code>$unbanbot @user</code> - Unban user from bot ✅</li>
+                    <li><code>$ban @user [time]</code> - Ban user from server ⛔</li>
+                    <li><code>$kick @user</code> - Kick user from server 👢</li>
+                    <li><code>$mute @user [time]</code> - Mute a user 🔇</li>
+                    <li><code>$unmute @user</code> - Unmute a user 🗣️</li>
+                    <li><code>$purge <amount></code> - Delete messages 🗑️</li>
+                    <li><code>$r @user <role></code> - Add role to user 🎭</li>
+                    <li><code>$setavatar [GIF URL or attachment]</code> - Change bot's avatar 🖼️</li>
+                    <li><code>$setbanner [GIF URL or attachment]</code> - Change bot's banner 🎨</li>
+                    <li><code>$warn @user <reason></code> - Warn a user, auto-mutes after 3 warnings ⚠️</li>
+                    <li><code>$warnings @user</code> - Show a user's warning count and history 📋</li>
+                    <li><code>$lock [channel]</code> - Lock a channel from non-moderators 🔒</li>
+                    <li><code>$setupwelcome</code> - Set up a welcome message for new users!</li>
+                    <li><code>$setuptest</code> - Test your welcome message</li>
+                    <li><code>$setupremove</code> - Remove your welcome message</li>
+                    <li><code>$setlogchannel #channel</code> - Set a channel for bot logs 📝</li>
+                    <li><code>$removelogchannel</code> - Remove the logging channel 🗑️</li>
+                    <li><code>$setprofanityfilter word1, word2</code> - Set a profanity filter 🚫</li>
+                    <li><code>$removeprofanityfilter</code> - Remove the profanity filter 🗑️</li>
+                    <li><code>$setautorole @role</code> - Set a role to be automatically assigned to new members 🎭</li>
+                    <li><code>$removeautorole</code> - Remove the auto-role 🗑️</li>
+                    <li><code>$reactionrole</code> - Interactive setup for reaction roles 🎭</li>
+                    <li><code>$removereactionrole</code> - Interactive removal of reaction roles 🗑️</li>
                 </ul>
             </div>
-            <div class="command-category" tabindex="0">
+            <div class="command-category" tabindex="0" aria-expanded="false">
                 <h3>Economy Commands</h3>
                 <ul class="dropdown">
-                    <li><code>$daily</code> - Get daily rewards</li>
-                    <li><code>$balance</code> - Check your balance</li>
-                    <li><code>$gamble &lt;amount&gt;</code> - Gamble your coins</li>
-                    <li><code>$cf &lt;amount&gt; [heads/tails]</code> - Play coinflip</li>
-                    <li><code>$rob @user</code> - Rob another user</li>
+                    <li><code>$daily</code> - Get daily rewards 🎁</li>
+                    <li><code>$weekly</code> - Get weekly rewards 🏆</li>
+                    <li><code>$monthly</code> - Get monthly rewards 🌟</li>
+                    <li><code>$balance</code> - Check your balance 💰</li>
+                    <li><code>$gamble <amount></code> - Gamble your coins 🎲</li>
+                    <li><code>$cf <amount> [heads/tails]</code> - Play coinflip 🪙</li>
+                    <li><code>$rob @user</code> - Rob another user 😈</li>
+                    <li><code>$give @user <amount></code> - Give coins to another user 🤝</li>
+                    <li><code>$trade @user <item> <quantity></code> - Trade items with another user 🔄</li>
+                    <li><code>$work</code> - Work a job to earn coins (1h cooldown) 💼</li>
                 </ul>
             </div>
-            <div class="command-category" tabindex="0">
+            <div class="command-category" tabindex="0" aria-expanded="false">
                 <h3>Game Commands</h3>
                 <ul class="dropdown">
-                    <li><code>$hunt</code> - Go hunting</li>
-                    <li><code>$battle @user</code> - Battle another user</li>
-                    <li><code>$petbattle @user</code> - Battle with your team</li>
-                    <li><code>$teamadd</code> - Create your battle team</li>
+                    <li><code>$hunt</code> - Go hunting 🏹</li>
+                    <li><code>$battle @user</code> - Battle another user ⚔️</li>
+                    <li><code>$petbattle @user</code> - Battle with your team 🐾</li>
+                    <li><code>$teamadd</code> - Create your battle team 🛡️</li>
+                    <li><code>$pd play</code> - Start NeuroLink Mind Reader game 🔮</li>
+                    <li><code>$pd stop</code> - Stop NeuroLink Mind Reader game 🛑</li>
+                    <li><code>$trivia</code> - Answer a trivia question for coins 🧠</li>
+                    <li><code>$rps <rock/paper/scissors> <bet></code> - Play rock-paper-scissors with a bet ✊✋✌️</li>
+                    <li><code>$fishing</code> - Go fishing for coins and rare items 🎣</li>
+                    <li><code>$blackjack <bet></code> - Play blackjack against the bot 🃏</li>
+                    <li><code>$slots <bet></code> - Play slots for a chance to win coins 🎰</li>
+                    <li><code>$guild <action> [name]</code> - Create or join a guild/team 🏰</li>
                 </ul>
             </div>
-            <div class="command-category" tabindex="0">
+            <div class="command-category" tabindex="0" aria-expanded="false">
                 <h3>Inventory Commands</h3>
-                <ul ```html
                 <ul class="dropdown">
-                    <li><code>$inventory</code> - View your inventory</li>
-                    <li><code>$shop</code> - View the shop</li>
-                    <li><code>$buy &lt;item_number&gt; &lt;quantity&gt;</code> - Buy items</li>
+                    <li><code>$inventory</code> - View your inventory 🎒</li>
+                    <li><code>$shop</code> - View the shop 🛒</li>
+                    <li><code>$buy <item_id> <quantity></code> - Buy items 🛍️</li>
                 </ul>
             </div>
-            <div class="command-category" tabindex="0">
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Social Commands</h3>
+                <ul class="dropdown">
+                    <li><code>$marry @user</code> - Propose marriage to another user 💍</li>
+                    <li><code>$divorce</code> - Divorce your current spouse 💔</li>
+                    <li><code>$adopt @user</code> - Adopt another user as your child 👨‍👩‍👧</li>
+                    <li><code>$tree</code> - View your family tree 🌳</li>
+                    <li><code>$disown</code> - Disown your own kid 👨‍👩‍👧</li>
+                    <li><code>$leavefamily</code> - Leave a family if you were forcibly adopted 👨‍👩‍👧</li>
+                </ul>
+            </div>
+            <div class="command-category" tabindex="0" aria-expanded="false">
                 <h3>Utility Commands</h3>
                 <ul class="dropdown">
-                    <li><code>$afk [reason]</code> - Set AFK status</li>
-                    <li><code>$leaderboard</code> - View top players</li>
-                    <li><code>$invite</code> - Get bot invite link</li>
+                    <li><code>$afk [reason]</code> - Set AFK status 😴</li>
+                    <li><code>$leaderboard</code> - View top players 🏅</li>
+                    <li><code>$invite</code> - Get bot invite link 🔗</li>
+                    <li><code>$hello</code> - Say hi to Archanid 👋</li>
+                    <li><code>$ship @user @user</code> - Ship two users! [THE CHANCES ARE RANDOM!!] 💖</li>
+                    <li><code>$poll <question> <option1> <option2> [option3] [option4]</code> - Create a poll with up to 4 options 📊</li>
+                    <li><code>$profile</code> - View your user profile 🌟</li>
+                    <li><code>$remindme <minutes> <message></code> - Set a reminder for yourself ⏰</li>
+                    <li><code>$serverstats</code> - Show server statistics 📊</li>
+                    <li><code>$setbio <bio></code> - Set your profile bio 📝</li>
+                    <li><code>$news [topic]</code> - Get latest news headlines 📰</li>
+                    <li><code>$weather <location></code> - Get weather for a location ☀️</li>
+                </ul>
+            </div>
+            <div class="command-category" tabindex="0" aria-expanded="false">
+                <h3>Fun Commands</h3>
+                <ul class="dropdown">
+                    <li><code>$meme</code> - Fetch a random meme 😂</li>
+                    <li><code>$8ball <question></code> - Ask the Magic 8-Ball a question 🎱</li>
                 </ul>
             </div>
         </section>
     </main>
     <footer>
-        <p>Archanid Bot is your ultimate assistant for managing Discord servers with advanced admin tools, fun games, and daily rewards to keep the community engaged!</p>
+        <p>Archanid Bot is your ultimate assistant for managing Discord servers with advanced admin tools, fun games, and daily rewards to keep the community engaged!                      made with ❤️ by @fenruko <3
+        </p>
     </footer>
-<script src="script.js"></script>
+    <script>
+        document.querySelectorAll('.command-category').forEach(category => {
+            category.addEventListener('click', () => {
+                const isExpanded = category.getAttribute('aria-expanded') === 'true';
+                category.setAttribute('aria-expanded', !isExpanded);
+            });
+        });
+    </script>
 </body>
 </html>

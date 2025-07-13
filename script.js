@@ -1,3 +1,54 @@
+const clientId = '1329184069426348052';  // Replace with your bot's ID
+const redirectUri = 'https://fenruko.github.io/index.html';
+const scopes = ['identify', 'guilds'];
+const responseType = 'token';
+
+function getAccessToken() {
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  return params.get('access_token');
+}
+
+async function fetchUserData(token) {
+  const res = await fetch('https://discord.com/api/users/@me', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return res.json();
+}
+
+async function fetchUserGuilds(token) {
+  const res = await fetch('https://discord.com/api/users/@me/guilds', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const all = await res.json();
+  return all.filter(g => (g.permissions & 0x20) === 0x20); // Only guilds user can manage
+}
+
+// After page loads
+const token = getAccessToken();
+if (token) {
+  fetchUserData(token).then(user => {
+    const profile = document.createElement('div');
+    profile.innerHTML = `<p>👋 Logged in as <strong>${user.username}#${user.discriminator}</strong></p>`;
+    document.body.prepend(profile);
+  });
+
+  fetchUserGuilds(token).then(guilds => {
+    const dropdown = document.getElementById('guild_id');
+    dropdown.innerHTML = '<option value="">Select a server...</option>';
+    guilds.forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g.id;
+      opt.textContent = g.name;
+      dropdown.appendChild(opt);
+    });
+  });
+}
+
+
+document.getElementById('loginBtn').href =
+  `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${scopes.join('%20')}`;
+
 function getAccessToken() {
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
@@ -35,6 +86,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+const token = getAccessToken();
+if (token) {
+  getUser(token).then(user => {
+    const welcome = document.createElement("p");
+    welcome.innerHTML = `👋 Logged in as <strong>${user.username}#${user.discriminator}</strong>`;
+    document.body.prepend(welcome);
+  });
+
+  getGuilds(token).then(guilds => {
+    const dropdown = document.getElementById("guild_id");
+    guilds.forEach(guild => {
+      const option = document.createElement("option");
+      option.value = guild.id;
+      option.textContent = guild.name;
+      dropdown.appendChild(option);
+    });
+  });
+}
+
 
 document.getElementById("loginBtn").href =
   "https://discord.com/oauth2/authorize?client_id=1329184069426348052&redirect_uri=https%3A%2F%2Ffenruko.github.io%2Findex.html&response_type=token&scope=identify%20guilds";

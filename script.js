@@ -1,4 +1,25 @@
-    document.addEventListener("DOMContentLoaded", function () {
+function getAccessToken() {
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  return params.get("access_token");
+}
+
+async function getUser(token) {
+  const res = await fetch("https://discord.com/api/users/@me", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return await res.json();
+}
+
+async function getGuilds(token) {
+  const res = await fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const all = await res.json();
+  return all.filter(g => (g.permissions & 0x20) === 0x20); // Only servers where user can MANAGE_GUILD
+}
+
+document.addEventListener("DOMContentLoaded", function () {
     const categories = document.querySelectorAll(".command-category h3");
 
     categories.forEach((category) => {
@@ -14,6 +35,10 @@
         });
     });
 });
+
+document.getElementById("loginBtn").href =
+  "https://discord.com/oauth2/authorize?client_id=1329184069426348052&redirect_uri=https%3A%2F%2Ffenruko.github.io%2Findex.html&response_type=token&scope=identify%20guilds";
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("antiraidForm");
   if (!form) return;

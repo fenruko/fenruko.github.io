@@ -290,6 +290,53 @@
                 </ul>
             </div>
         </section>
+    <section id="antiraid" style="margin-top: 60px;">
+  <h2>🛡️ Anti-Raid System</h2>
+  <form id="antiraidForm" style="background:#1c1c1c; padding: 20px; border-radius: 10px;">
+    <label>Guild ID</label>
+    <input id="guild_id" type="text" placeholder="Enter your server ID" style="width: 100%; padding: 8px;"><br><br>
+
+    <label>Join Spike Protection</label><br>
+    <input type="checkbox" id="join_enabled"> Enabled<br>
+    <label>Threshold</label>
+    <input type="number" id="join_threshold" style="width: 100%;"><br>
+    <label>Interval (sec)</label>
+    <input type="number" id="join_interval" style="width: 100%;"><br>
+    <label>Action</label>
+    <select id="join_action" style="width: 100%;">
+      <option>ban</option>
+      <option>kick</option>
+      <option>mute</option>
+    </select><br><br>
+
+    <label>Mention Spam Protection</label><br>
+    <input type="checkbox" id="mention_enabled"> Enabled<br>
+    <label>Threshold</label>
+    <input type="number" id="mention_threshold" style="width: 100%;"><br>
+    <label>Action</label>
+    <select id="mention_action" style="width: 100%;">
+      <option>ban</option>
+      <option>kick</option>
+      <option>mute</option>
+    </select><br><br>
+
+    <label>Message Flood Protection</label><br>
+    <input type="checkbox" id="msg_enabled"> Enabled<br>
+    <label>Messages per 5s</label>
+    <input type="number" id="msg_rate" style="width: 100%;"><br>
+    <label>Action</label>
+    <select id="msg_action" style="width: 100%;">
+      <option>ban</option>
+      <option>kick</option>
+      <option>mute</option>
+    </select><br><br>
+
+    <label>Bot Age Limit (minutes)</label>
+    <input type="number" id="bot_age" style="width: 100%;"><br><br>
+
+    <label>Log Channel ID</label>
+    <input type="text" id="log_channel" style="width: 100%;"><br>_
+
     </main>
     <footer>
         <p>made with ❤️ by @fenruko <3

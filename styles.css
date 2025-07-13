@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background: #000; /* Dark background for the entire page */
+    background: #1d1d1d; /* Dark background for the entire page */
     color: #f4f4f9;
     margin: 0;
     padding: 0;
@@ -54,20 +54,7 @@ nav a {
 .nav-buttons .button:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(45deg, #e91e63, #ff6f61); /* Change background on hover */
 }
-
-/* Colorful Transitioning Rectangle */
-#hero {
-    position: relative;
-    text-align: center;
-    padding: 50px 20px;
-    color: #fff;
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    overflow: hidden; /* Hide overflow for the animated background */
-}
-
 #hero::before {
     content: '';
     position: absolute;
@@ -75,7 +62,6 @@ nav a {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(270deg, #36c6ff, #8e44ad, #ff6f61, #ffcc00);
     animation: heroBackgroundTransition 15s infinite; /* Apply the color transition */
     z-index: -1; /* Place behind the content */
 }
@@ -87,13 +73,6 @@ nav a {
     75% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-
-h1 {
-    font-size: 3rem; /* Larger font size for the title */
-    margin: 0; /* Remove default margin */
-    font-weight: bold; /* Bold font for the title */
-}
-
 h2 {
     margin-top: 40px; /* Space above commands section */
 }
@@ -156,4 +135,8 @@ footer {
     padding: 20px; /* Padding for footer */
     background: rgba(20, 20, 20, 0.95); /* Footer background */
     color: #ddd; /* Footer text color */
+}
+
+#page_title{
+    text-align: center;
 }

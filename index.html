@@ -261,6 +261,19 @@
   </ul>
 </div>
 <!-- END COMMAND HELP CATEGORIES -->
+<section id="welcome">
+  <h2>🎉 Welcome Settings</h2>
+  <form id="welcomeForm" style="background:#1c1c1c; padding:20px; border-radius:10px;">
+    <label><input type="checkbox" id="welcome_enabled"> Enable Welcome Message</label><br><br>
+    <label>Welcome Channel ID:</label><br>
+    <input type="text" id="welcome_channel" style="width:100%;"><br><br>
+    <label>Message (use {user}):</label><br>
+    <textarea id="welcome_message" style="width:100%; height:80px;"></textarea><br><br>
+    <label>Image URL:</label><br>
+    <input type="text" id="welcome_image" style="width:100%;"><br><br>
+    <button type="submit" class="button">💾 Save Welcome Config</button>
+  </form>
+</section>
 
   <!-- Anti-Raid Config Section -->
   <section id="antiraid" style="margin-top: 40px;">

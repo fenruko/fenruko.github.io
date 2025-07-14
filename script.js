@@ -112,24 +112,3 @@ document.addEventListener("DOMContentLoaded", () => {
     else alert("❌ Failed to save.");
   });
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const token = getAccessToken?.(); // If OAuth used
-
-  document.getElementById("welcomeForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const guild_id = document.getElementById("guild_id")?.value || prompt("Guild ID:");
-    const data = {
-      enabled: document.getElementById("welcome_enabled").checked,
-      channel_id: document.getElementById("welcome_channel").value,
-      message: document.getElementById("welcome_message").value,
-      image: document.getElementById("welcome_image").value
-    };
-    const res = await fetch(`http://YOUR_API_SERVER:3000/api/welcome/${guild_id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    alert(res.ok ? "✅ Saved!" : "❌ Failed to save.");
-  });
-});

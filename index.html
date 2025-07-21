@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Archanid Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,57 +21,64 @@
 </header>
 
 <section id="hero">
-  <h1>Welcome to the Archanid Bot Dashboard</h1>
+  <div class="hero-content">
+    <h1>Welcome to the Archanid Bot Dashboard</h1>
+    <p>Configure your anti-raid settings and view bot commands with ease.</p>
+  </div>
 </section>
 
 <main>
-  <!-- Profile Info -->
-  <div id="userProfile" style="padding: 20px;"></div>
+  <div id="userProfile" class="profile-info"></div>
 
-  <!-- Anti-Raid Config Section -->
-  <section id="antiraid" style="margin-top: 40px;">
+  <section id="antiraid">
     <h2>🛡️ Anti-Raid Settings</h2>
-    <form id="antiraidForm" style="background: #1c1c1c; padding: 20px; border-radius: 10px;">
+    <form id="antiraidForm">
       <label>Select a Server</label>
-      <select id="guild_id" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+      <select id="guild_id">
         <option value="">Login to load your servers</option>
       </select>
 
-      <h3>Join Spike</h3>
-      <input type="checkbox" id="join_enabled"> Enabled<br>
-      <label>Threshold</label><input type="number" id="join_threshold"><br>
-      <label>Interval (sec)</label><input type="number" id="join_interval"><br>
-      <label>Action</label>
-      <select id="join_action">
-        <option>ban</option><option>kick</option><option>mute</option>
-      </select><br><br>
+      <fieldset>
+        <legend>Join Spike</legend>
+        <input type="checkbox" id="join_enabled"> Enabled<br>
+        <label>Threshold</label><input type="number" id="join_threshold"><br>
+        <label>Interval (sec)</label><input type="number" id="join_interval"><br>
+        <label>Action</label>
+        <select id="join_action">
+          <option>ban</option><option>kick</option><option>mute</option>
+        </select>
+      </fieldset>
 
-      <h3>Mention Spam</h3>
-      <input type="checkbox" id="mention_enabled"> Enabled<br>
-      <label>Threshold</label><input type="number" id="mention_threshold"><br>
-      <label>Action</label>
-      <select id="mention_action">
-        <option>ban</option><option>kick</option><option>mute</option>
-      </select><br><br>
+      <fieldset>
+        <legend>Mention Spam</legend>
+        <input type="checkbox" id="mention_enabled"> Enabled<br>
+        <label>Threshold</label><input type="number" id="mention_threshold"><br>
+        <label>Action</label>
+        <select id="mention_action">
+          <option>ban</option><option>kick</option><option>mute</option>
+        </select>
+      </fieldset>
 
-      <h3>Message Flooding</h3>
-      <input type="checkbox" id="msg_enabled"> Enabled<br>
-      <label>Messages per 5s</label><input type="number" id="msg_rate"><br>
-      <label>Action</label>
-      <select id="msg_action">
-        <option>ban</option><option>kick</option><option>mute</option>
-      </select><br><br>
+      <fieldset>
+        <legend>Message Flooding</legend>
+        <input type="checkbox" id="msg_enabled"> Enabled<br>
+        <label>Messages per 5s</label><input type="number" id="msg_rate"><br>
+        <label>Action</label>
+        <select id="msg_action">
+          <option>ban</option><option>kick</option><option>mute</option>
+        </select>
+      </fieldset>
 
       <label>Bot Age Limit (mins)</label><input type="number" id="bot_age"><br>
-      <label>Log Channel ID</label><input type="text" id="log_channel"><br><br>
+      <label>Log Channel ID</label><input type="text" id="log_channel"><br>
 
-      <button type="submit" class="button">💾 Save Anti-Raid Config</button>
+      <button type="submit" class="button">📏 Save Anti-Raid Config</button>
     </form>
   </section>
 
-  <!-- Help Commands -->
   <section id="commands">
-    <h2>📘 Help Commands</h2>
+    <h2>📘️ Help Commands</h2>
+
     <div class="command-category">
       <h3>Moderation</h3>
       <ul class="dropdown active">
@@ -91,7 +99,7 @@
 </main>
 
 <footer>
-  <p>&copy; 2025 Fenruko Bot Dashboard</p>
+  <p>&copy; 2025 Archanid Dashboard by Fenruko</p>
 </footer>
 
 <script src="script.js"></script>

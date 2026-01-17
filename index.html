@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali E. | Coding & Design Expert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Kalam:wght@400;700&family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* Darker, Muted Palette */
+            --bg-color: #0f1115;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            
+            /* Muted Emerald (Coding) */
+            --primary-green: #48c774;
+            --accent-blue: #3e8ed0;
+            --coding-gradient: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-blue) 100%);
+            
+            /* Muted Purple (Design) */
+            --primary-purple: #9f7aea;
+            --accent-pink: #d53f8c;
+            --design-gradient: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-pink) 100%);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            /* Fonts */
+            --font-main: 'Nunito', sans-serif;
+            --font-hand: 'Kalam', cursive;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* --- NOISE TEXTURE (Human Made Feel) --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- ANIMATED BACKGROUND --- */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: linear-gradient(-45deg, #1a1c23, #2d3748, #1a202c, #171923);
+            background-size: 400% 400%;
+            animation: gradientShift 25s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .blob-shape {
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            transition: all 0.4s ease;
+        }
+        
+        .blob-shape:hover {
+            border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+        }
+
+        .gradient-text {
+            background: var(--coding-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .gradient-text-purple {
+            background: var(--design-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-coding {
+            background: var(--coding-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(72, 199, 116, 0.2);
+        }
+        .btn-coding:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 199, 116, 0.3);
+        }
+
+        .btn-design {
+            background: var(--design-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(159, 122, 234, 0.2);
+        }
+        .btn-design:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(159, 122, 234, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .btn-outline:hover {
+            border-color: var(--primary-purple);
+            background: rgba(159, 122, 234, 0.1);
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        h2 {
+            font-family: var(--font-main);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- HEADER & LOGO ANIMATION (FIXED) --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            font-family: var(--font-code);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            /* Normal Width */
+            width: 100px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            padding: 0 10px;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: relative;
+        }
+
+        .logo-text {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* SCROLLED STATE for Logo - FIXED ANIMATION */
+        header.scrolled .logo-container {
+            width: 38px; /* Tight width, just enough for '<A>' */
+            background: var(--primary-green); /* Change to coding green or neutral */
+            padding: 0;
+            border-radius: 50%; /* Turn into circle */
+        }
+
+        /* 
+           We calculate the shift.
+           In normal state (100px wide), center is at 50px.
+           In scrolled state (38px wide), center is at 19px.
+           We want the 'A' to be at 19px.
+           In the string `<Ali E.>`, the 'A' is at the far left (approx 0).
+           So we shift the text RIGHT by about 19px.
+        */
+        header.scrolled .logo-text {
+            transform: translateX(20px); /* Shift right to center the 'A' */
+            font-size: 1.1rem; /* Slightly smaller font to fit tight */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-family: var(--font-hand); 
+            font-weight: 400;
+            transform: rotate(-2deg); 
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass-bg);
+            padding: 8px 20px;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* --- ABOUT & SKILLS --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .tech-tag {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            color: var(--accent-blue);
+        }
+        .tech-tag:hover {
+            background: rgba(62, 142, 208, 0.1);
+            border-color: var(--accent-blue);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 20px; /* Slightly rounder for profile */
+        }
+
+        /* --- SERVICES (SHARED) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.07);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            filter: drop-shadow(0 0 5px rgba(72, 199, 116, 0.4));
+        }
+
+        .service-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: var(--font-main);
+        }
+
+        .service-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* --- PRICING (SHARED) --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 20px;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary-green);
+            box-shadow: 0 0 30px rgba(72, 199, 116, 0.1);
+            transform: scale(1.05);
+            z-index: 2;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        }
+        
+        /* Specifics for Design Pricing */
+        .pricing-card.popular-design {
+            border: 2px solid var(--primary-purple);
+            box-shadow: 0 0 30px rgba(159, 122, 234, 0.1);
+        }
+
+        .plan-name {
+            font-family: var(--font-code);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #fff;
+            font-family: var(--font-main);
+        }
+
+        .delivery {
+            font-size: 0.9rem;
+            color: var(--primary-green);
+            margin-bottom: 25px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .delivery-purple {
+            color: var(--primary-purple);
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            color: #d1d5db;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        .pricing-card.popular-design .features-list li::before {
+            color: var(--primary-purple);
+        }
+
+        .plan-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-style: italic;
+            min-height: 45px;
+        }
+
+        .pricing-btn-container {
+            margin-top: auto;
+        }
+
+        /* --- CTA --- */
+        .cta-section {
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(72, 199, 116, 0.1) 0%, rgba(62, 142, 208, 0.05) 100%);
+            border: 1px solid rgba(72, 199, 116, 0.2);
+            padding: 60px;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 50px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATION CLASSES --- */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .pricing-card.popular { transform: scale(1); }
+            .nav-links { display: none; }
+            header.scrolled .logo-container { width: 35px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+    <div class="noise-overlay"></div>
+
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <!-- Animated Logo -->
+                <div class="logo-container blob-shape">
+                    <span class="logo-text">&lt;Ali E./&gt;</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#coding">Coding</a>
+                    <a href="#design">Design</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-coding blob-shape" style="padding: 10px 25px; font-size: 0.9rem;">Hire Me</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="location-badge hidden">
+                    <span>📍 Egypt</span> • <span>🌐 English, Arabic</span>
+                </div>
+                <h1 class="hidden">
+                    Coding. <span class="gradient-text">Design.</span><br>
+                    Solutions.
+                </h1>
+                <p class="hidden">
+                    From complex automation scripts in Python to professional logo design. 
+                    I blend technical precision with creative artistry to build your brand.
+                </p>
+                <div class="hidden">
+                    <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-coding blob-shape">Coding Gigs</a>
+                    <a href="https://www.fiverr.com/s/DBejKlN" target="_blank" class="btn btn-design blob-shape" style="margin-left: 10px;">Design Gigs</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text hidden">
+                        <h2>About Me</h2>
+                        <p>
+                            I am Ali E., a versatile professional bridging the gap between engineering and aesthetics. I bring a high level of technical skill in programming and a creative eye for graphic design.
+                        </p>
+                        <p>
+                            Whether you need a backend script to automate data scraping or a visual identity for your brand, I have the versatility to deliver high-quality results tailored to your needs.
+                        </p>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Graphic Design</span>
+                            <span class="tech-tag">Branding</span>
+                            <span class="tech-tag">Automation</span>
+                        </div>
+                    </div>
+                    <div class="glass-card blob-shape hidden">
+                        <div style="font-family: var(--font-code); color: var(--primary-green); margin-bottom: 20px;">// Developer Profile</div>
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-green), var(--primary-purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 1.5rem;">A</div>
+                            <div>
+                                <h3 style="font-size: 1.4rem;">Ali E.</h3>
+                                <span style="color: var(--text-muted); font-size: 0.9rem;">@fenruko</span>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--glass-border); padding-top: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem;">
+                                <span style="color: var(--text-muted);">From</span>
+                                <span>Egypt</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.95rem;">
+                                <span style="color: var(--text-muted);">Languages</span>
+                                <span>Arabic, English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CODING SECTION -->
+        <section id="coding">
+            <div class="container">
+                <h2>Coding Services</h2>
+                <p class="section-subtitle">Web Scraping, Automation & Custom Scripts</p>
+                
+                <div class="services-grid">
+                    <div class="service-card hidden">
+                        <div class="service-icon">⛏️</div>
+                        <h3 class="service-title">Web Scraping</h3>
+                        <p class="service-desc">Automating data collection from websites into clean CSV or Excel files.</p>
+                    </div>
+                    <div class="service-card hidden">
+                        <div class="service-icon">⚙️</div>
+                        <h3 class="service-title">Custom Scripting</h3>
+                        <p class="service-desc">Creating tools in Python or C++ to automate your repetitive tasks.</p>
+                    </div>
+                    <div class="service-card hidden">
+                        <div class="service-icon">🐞</div>
+                        <h3 class="service-title">Debugging</h3>
+                        <p class="service-desc">Identifying and fixing errors in your existing code to ensure efficiency.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 80px;">
+                    <h3>Coding Pricing</h3>
+                    <div class="pricing-grid">
+                        <!-- BASIC -->
+                        <div class="pricing-card hidden">
+                            <div class="plan-name">Basic Code</div>
+                            <div class="price">$15</div>
+                            <span class="delivery">7 Days Delivery • 2 Revisions</span>
+                            <div class="plan-desc">Simple tasks and small data sets.</div>
+                            <ul class="features-list">
+                                <li>2 pages mined / scraped</li>
+                                <li>1 source mine / scraped</li>
+                                <li>Source code included</li>
+                                <li>Functional script</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-outline blob-shape" style="width: 100%;">Select Basic</a>
+                            </div>
+                        </div>
+
+                        <!-- STANDARD -->
+                        <div class="pricing-card popular hidden">
+                            <div class="plan-name" style="color: var(--primary-green);">Standard Code</div>
+                            <div class="price">$30</div>
+                            <span class="delivery">5 Days Delivery • 4 Revisions</span>
+                            <div class="plan-desc">Robust code with better frontend layout.</div>
+                            <ul class="features-list">
+                                <li><strong>4 pages</strong> mined / scraped</li>
+                                <li><strong>3 sources</strong> processed</li>
+                                <li>Install & Test scripts</li>
+                                <li>Task automation</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-coding blob-shape" style="width: 100%;">Select Standard</a>
+                            </div>
+                        </div>
+
+                        <!-- PREMIUM -->
+                        <div class="pricing-card hidden">
+                            <div class="plan-name">Premium Code</div>
+                            <div class="price">$45</div>
+                            <span class="delivery">3 Days Delivery • 7 Revisions</span>
+                            <div class="plan-desc">Full service with optimized frontend design.</div>
+                            <ul class="features-list">
+                                <li><strong>8 pages</strong> mined / scraped</li>
+                                <li><strong>5 sources</strong> mine / scraped</li>
+                                <li>Everything in Standard</li>
+                                <li>Priority support</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-outline blob-shape" style="width: 100%;">Select Premium</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DESIGN SECTION (NEW) -->
+        <section id="design" style="background: linear-gradient(to bottom, transparent, rgba(20, 20, 30, 0.8), transparent);">
+            <div class="container">
+                <h2>Design Services</h2>
+                <p class="section-subtitle">Professional, Custom Logo & Brand Identity</p>
+                
+                <div class="services-grid">
+                    <div class="service-card hidden">
+                        <div class="service-icon" style="filter: drop-shadow(0 0 5px rgba(159, 122, 234, 0.4));">🎨</div>
+                        <h3 class="service-title">Logo Design</h3>
+                        <p class="service-desc">Modern, custom logos tailored to your brand's unique personality.</p>
+                    </div>
+                    <div class="service-card hidden">
+                        <div class="service-icon" style="filter: drop-shadow(0 0 5px rgba(159, 122, 234, 0.4));">✏️</div>
+                        <h3 class="service-title">Brand Identity</h3>
+                        <p class="service-desc">Full brand guides including color palettes and font selection.</p>
+                    </div>
+                    <div class="service-card hidden">
+                        <div class="service-icon" style="filter: drop-shadow(0 0 5px rgba(159, 122, 234, 0.4));">💻</div>
+                        <h3 class="service-title">Social Media Kits</h3>
+                        <p class="service-desc">Optimized sizes and assets for all your social platforms.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 80px;">
+                    <h3>Design Pricing</h3>
+                    <div class="pricing-grid">
+                        <!-- BASIC DESIGN -->
+                        <div class="pricing-card hidden">
+                            <div class="plan-name">Basic Pack</div>
+                            <div class="price">$5</div>
+                            <span class="delivery delivery-purple">4 Days Delivery • 2 Revisions</span>
+                            <div class="plan-desc">Perfect for getting a single logo concept.</div>
+                            <ul class="features-list">
+                                <li>1 logo concept</li>
+                                <li>Logo transparency</li>
+                                <li>High resolution files</li>
+                                <li>2-3 small changes</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/DBejKlN" target="_blank" class="btn btn-outline blob-shape" style="width: 100%;">Select Basic</a>
+                            </div>
+                        </div>
+
+                        <!-- STANDARD DESIGN -->
+                        <div class="pricing-card popular popular-design hidden">
+                            <div class="plan-name" style="color: var(--primary-purple);">Standard Pack</div>
+                            <div class="price">$10</div>
+                            <span class="delivery delivery-purple">3 Days Delivery • 3 Revisions</span>
+                            <div class="plan-desc">More ideas with mockups for better visualization.</div>
+                            <ul class="features-list">
+                                <li>2-3 logo ideas</li>
+                                <li>Logo transparency</li>
+                                <li>Printable files</li>
+                                <li>3D Mockup</li>
+                                <li>Stationary design</li>
+                                <li>Social media kit</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/DBejKlN" target="_blank" class="btn btn-design blob-shape" style="width: 100%;">Select Standard</a>
+                            </div>
+                        </div>
+
+                        <!-- PREMIUM DESIGN -->
+                        <div class="pricing-card hidden">
+                            <div class="plan-name">Professional Pack</div>
+                            <div class="price">$15</div>
+                            <span class="delivery delivery-purple">2 Days Delivery • 5 Revisions</span>
+                            <div class="plan-desc">Complete brand guide with multiple concepts.</div>
+                            <ul class="features-list">
+                                <li>4-5 logo ideas</li>
+                                <li>Many changes allowed</li>
+                                <li><strong>Full brand guide</strong></li>
+                                <li>Logo, Colors & Fonts</li>
+                                <li>Social media sizes</li>
+                                <li>Priority support</li>
+                            </ul>
+                            <div class="pricing-btn-container">
+                                <a href="https://www.fiverr.com/s/DBejKlN" target="_blank" class="btn btn-outline blob-shape" style="width: 100%;">Select Premium</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT/CTA SECTION -->
+        <section id="contact" class="cta-section">
+            <div class="container">
+                <div class="cta-box hidden">
+                    <h2>Ready to Start Your Project?</h2>
+                    <p style="margin: 20px 0 30px; color: #d1d5db;">
+                        I am available around the clock to answer your questions and provide updates. 
+                        Whether it's code or design, let's discuss your requirements.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://www.fiverr.com/s/6YpgKjX" target="_blank" class="btn btn-coding blob-shape">Hire Coder</a>
+                        <a href="https://www.fiverr.com/s/DBejKlN" target="_blank" class="btn btn-design blob-shape">Hire Designer</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="margin-bottom: 20px;">
+                <a href="https://www.fiverr.com/s/akVjojQ" target="_blank" style="color: #fff; text-decoration: none; font-weight: 700;">Ali E. (@fenruko)</a>
+            </div>
+            <p>&copy; <span id="year"></span> Ali E. Coding & Design. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, observerOptions);
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const header = document.getElementById('main-header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 // Verification Tab Logic
 window.initVerification = function() {
-    const guildId = window.selectedGuildId;
+    const guildId = window._verificationGuildId;
     if (!guildId) {
         document.getElementById('vFlagsList').innerHTML = '<tr><td colspan="4" class="v-empty">Select a server to view flagged verifications</td></tr>';
         document.getElementById('vHistoryList').innerHTML = '<div class="v-empty">No data available</div>';
@@ -23,7 +23,7 @@ window.initVerification = function() {
 };
 
 async function fetchVerificationFlags() {
-    const guildId = window.selectedGuildId;
+    const guildId = window._verificationGuildId;
     if (!guildId) return;
     
     const list = document.getElementById('vFlagsList');
@@ -61,7 +61,7 @@ async function fetchVerificationFlags() {
 }
 
 async function fetchVerificationHistory() {
-    const guildId = window.selectedGuildId;
+    const guildId = window._verificationGuildId;
     if (!guildId) return;
 
     const list = document.getElementById('vHistoryList');

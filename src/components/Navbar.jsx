@@ -11,7 +11,7 @@ const BOT_INVITE_URL =
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/commands", label: "Commands" },
-  { href: "/docs/", label: "Docs" },
+  { href: "https://docs.rift.baby", label: "Docs" },
   { href: "/team", label: "Team" },
 ];
 
@@ -47,15 +47,25 @@ export default function Navbar() {
             <Link to="/" className="flex text-blue-500 items-center group">
               <img src={RIFT_LOGO} className="w-10 h-10 rounded-full mr-1 object-cover" alt="Rift" />
             </Link>
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                to={link.href}
-                className="flex text-gray-200 text-sm font-thin mr-2 items-center group"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.href.startsWith("http") ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="flex text-gray-200 text-sm font-thin mr-2 items-center group"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="flex text-gray-200 text-sm font-thin mr-2 items-center group"
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
           </div>
 
           <div className="flex items-center gap-3">

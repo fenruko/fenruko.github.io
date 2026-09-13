@@ -34,7 +34,7 @@ export default function Footer() {
             <div className="flex flex-col space-y-2 text-[13px] text-white/40">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <Link to="/commands" className="hover:text-white transition-colors">Commands</Link>
-              <a href="/docs/" className="hover:text-white transition-colors">Docs</a>
+              <a href="https://docs.rift.baby" className="hover:text-white transition-colors">Docs</a>
               <Link to="/team" className="hover:text-white transition-colors">Team</Link>
               <a href="/dashboard.html" className="hover:text-white transition-colors">Dashboard</a>
             </div>

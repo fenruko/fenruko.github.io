@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rift Dashboard</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <!-- Star canvas removed for minimalist solid dark theme -->
+
+    <div class="glass-container">
+        <nav class="sidebar" id="sidebar">
+            <!-- Mobile header inside sidebar -->
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="https://i.postimg.cc/D0DrrFt3/110c46fc7f5cf0c4e29f872107d7bf97.png" alt="Rift Logo" class="sidebar-logo-img">
+                    <span>RIFT</span>
+                </div>
+                <button class="sidebar-close" id="sidebarClose" onclick="closeSidebar()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" data-tab="music">
+                    <i class="fa-solid fa-music"></i>
+                    <span>Music Player</span>
+                </li>
+                <li data-tab="moderation">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Moderation</span>
+                </li>
+                <li data-tab="verification">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span>Verification</span>
+                </li>
+                <li data-tab="stocks">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Stock Market</span>
+                </li>
+                <li data-tab="lastfm">
+                    <i class="fa-solid fa-headphones"></i>
+                    <span>Last.fm</span>
+                </li>
+
+                <li data-tab="settings">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Settings</span>
+                </li>
+                <li data-tab="vccall">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Voice Calls</span>
+                </li>
+            </ul>
+
+            <!-- Ko-fi tip button -->
+            <a href="https://ko-fi.com/fenruko" target="_blank" class="kofi-btn" title="Support Rift on Ko-fi">
+                <img src="https://storage.ko-fi.com/cdn/cup-border.png" class="kofi-icon" alt="Ko-fi">
+                <span>Support Rift</span>
+            </a>
+
+            <div class="sidebar-footer">
+                <div class="user-card" id="userCard">
+                    <button class="login-btn" onclick="login()">
+                        <i class="fa-brands fa-discord"></i> Login
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- Sidebar overlay for mobile -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="hamburger" id="hamburgerBtn" onclick="openSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h1 id="activeTabTitle">Music Player</h1>
+                </div>
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <span id="connectionStatus">Connected</span>
+                </div>
+            </header>
+
+            <!-- Mobile bottom nav — main tab switcher on mobile -->
+            <nav class="mobile-tab-bar" id="mobileTabBar">
+                <button class="mobile-tab active" data-maintab="music" onclick="mobileSwitchTab('music',this)">
+                    <i class="fa-solid fa-music"></i>
+                    <span>Music</span>
+                </button>
+                <button class="mobile-tab" data-maintab="moderation" onclick="mobileSwitchTab('moderation',this)">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Mod</span>
+                </button>
+                <button class="mobile-tab" data-maintab="verification" onclick="mobileSwitchTab('verification',this)">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span>Verify</span>
+                </button>
+                <button class="mobile-tab" data-maintab="stocks" onclick="mobileSwitchTab('stocks',this)">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Stocks</span>
+                </button>
+                <button class="mobile-tab" data-maintab="lastfm" onclick="mobileSwitchTab('lastfm',this)">
+                    <i class="fa-solid fa-headphones"></i>
+                    <span>FM</span>
+                </button>
+                <button class="mobile-tab" data-maintab="settings" onclick="mobileSwitchTab('settings',this)">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="content-scroll-area">
+                <!-- Music Section -->
+                <section id="music" class="tab-pane active">
+
+                    <!-- Chosen For You bar -->
+                    <div class="cfy-bar glass" id="cfyBar">
+                        <div class="cfy-label">
+                            <i class="fa-solid fa-sparkles"></i>
+                            <span>Chosen For You</span>
+                        </div>
+                        <div class="cfy-scroll" id="cfyScroll">
+                            <div class="cfy-loading">
+                                <div class="cfy-skeleton"></div>
+                                <div class="cfy-skeleton"></div>
+                                <div class="cfy-skeleton"></div>
+                                <div class="cfy-skeleton"></div>
+                                <div class="cfy-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile music sub-tabs (player / lyrics / queue) — mobile only -->
+                    <div class="mobile-music-tabs" id="mobileMusicTabs">
+                        <button class="mob-music-tab active" onclick="switchMusicPanel('player',this)">
+                            <i class="fa-solid fa-play"></i> Player
+                        </button>
+                        <button class="mob-music-tab" onclick="switchMusicPanel('lyrics',this)">
+                            <i class="fa-solid fa-microphone-lines"></i> Lyrics
+                        </button>
+                        <button class="mob-music-tab" onclick="switchMusicPanel('queue',this)">
+                            <i class="fa-solid fa-list"></i> Queue
+                        </button>
+                    </div>
+
+                    <!-- Recently Played + Top Songs -->
+                    <div class="music-history-row" id="musicHistoryRow">
+                        <!-- Recently Played -->
+                        <div class="glass music-history-card" id="recentlyPlayedCard">
+                            <div class="music-history-header">
+                                <span class="music-history-label"><i class="fa-solid fa-clock-rotate-left"></i> Recently Played</span>
+                                <button class="btn-icon btn-sm" onclick="loadMusicHistory()" title="Refresh">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                            </div>
+                            <div class="music-history-scroll" id="recentlyPlayedList">
+                                <div class="music-history-empty"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Top Songs -->
+                        <div class="glass music-history-card" id="topSongsCard">
+                            <div class="music-history-header">
+                                <span class="music-history-label"><i class="fa-solid fa-fire"></i> Top Songs</span>
+                                <span class="music-history-sub">This server</span>
+                            </div>
+                            <div class="music-history-scroll" id="topSongsList">
+                                <div class="music-history-empty"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="music-layout" id="musicLayout">
+                        
+                        <div class="player-main glass" id="panelPlayer">
+
+                            <!-- Top row: server selector + fix button -->
+                            <div class="player-top-row">
+                                <div class="guild-dropdown" id="guildDropdown" style="flex:1">
+                                    <div class="guild-dropdown-selected" id="guildDropdownSelected" onclick="toggleGuildDropdown()">
+                                        <div class="guild-dropdown-placeholder">
+                                            <i class="fa-solid fa-server"></i>
+                                            <span>Select a Server</span>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-down guild-dropdown-arrow"></i>
+                                    </div>
+                                    <div class="guild-dropdown-menu hidden" id="guildDropdownMenu"></div>
+                                </div>
+                                <button class="fix-audio-btn" onclick="openFixModal()" title="Fix audio issues">
+                                    <i class="fa-solid fa-wrench"></i>
+                                    <span>Fix</span>
+                                </button>
+                            </div>
+
+                            <!-- VC prompts -->
+                            <div id="vcAutoPrompt" class="vc-auto-prompt hidden">
+                                <div class="vc-auto-prompt-inner">
+                                    <i class="fa-solid fa-headphones-simple"></i>
+                                    <div class="vc-auto-prompt-text">
+                                        <span id="vcAutoPromptMsg">You're in a voice channel!</span>
+                                        <span id="vcAutoPromptSub">Want Rift to use it?</span>
+                                    </div>
+                                    <button class="vc-auto-btn" id="vcAutoYes" onclick="acceptAutoVc()">
+                                        <i class="fa-solid fa-check"></i> Use it
+                                    </button>
+                                    <button class="vc-auto-dismiss" onclick="dismissAutoVc()">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="vcStatusBar" class="vc-status-bar hidden">
+                                <div id="vcConnected" class="vc-connected hidden">
+                                    <span class="vc-dot"></span>
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <a id="vcChannelLink" href="#" target="_blank" class="vc-channel-name">—</a>
+                                    <span id="vcMemberCount" class="vc-members"></span>
+                                </div>
+                                <div id="vcDisconnected" class="vc-disconnected hidden">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    <span>Bot is not in a voice channel — join one to play music</span>
+                                </div>
+                            </div>
+
+                            <!-- Search -->
+                            <div class="music-search-container">
+                                <div class="search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="songSearchInput" placeholder="Search for a song or paste a URL..." autocomplete="off">
+                                </div>
+                                <div id="searchResults" class="search-results-dropdown hidden"></div>
+                            </div>
+
+                            <!-- Compact now playing -->
+                            <div class="now-playing-compact">
+                                <div class="album-art-compact" id="albumArt">
+                                    <i class="fa-solid fa-compact-disc fa-spin-slow"></i>
+                                </div>
+                                <div class="track-details-compact">
+                                    <div class="track-title-row">
+                                        <h2 id="currentTrackTitle">Not Playing</h2>
+                                    </div>
+                                    <p id="currentTrackAuthor">Select a server to view status</p>
+                                    <canvas id="waveformCanvas" class="waveform-canvas"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="player-controls">
+                                <div class="seek-bar-container">
+                                    <span id="timeCurrent">0:00</span>
+                                    <input type="range" id="seekBar" min="0" max="100" value="0">
+                                    <span id="timeTotal">0:00</span>
+                                </div>
+                                <div class="control-buttons">
+                                    <button class="btn-icon btn-sm ctrl-btn" id="shuffleBtn" onclick="musicControl('shuffle')" title="Shuffle">
+                                        <i class="fa-solid fa-shuffle"></i>
+                                        <span class="ctrl-tooltip">Shuffle</span>
+                                    </button>
+                                    <button class="btn-icon btn-sm ctrl-btn" onclick="musicControl('prev')" title="Previous">
+                                        <i class="fa-solid fa-backward-step"></i>
+                                        <span class="ctrl-tooltip">Previous</span>
+                                    </button>
+                                    <button class="btn-main ctrl-btn" onclick="musicControl('toggle')" id="playPauseBtn">
+                                        <i class="fa-solid fa-play"></i>
+                                        <span class="ctrl-tooltip" id="playPauseTooltip">Play</span>
+                                    </button>
+                                    <button class="btn-icon btn-sm ctrl-btn" onclick="musicControl('skip')" title="Skip">
+                                        <i class="fa-solid fa-forward-step"></i>
+                                        <span class="ctrl-tooltip">Skip</span>
+                                    </button>
+                                    <button class="btn-icon btn-sm ctrl-btn" id="loopBtn" onclick="handleLoopClick()" title="Loop: Off">
+                                        <i class="fa-solid fa-repeat"></i>
+                                        <span class="ctrl-tooltip" id="loopTooltip">Loop: Off</span>
+                                    </button>
+                                    <button class="btn-icon btn-sm ctrl-btn btn-stop" onclick="musicControl('stop')" title="Stop & Disconnect">
+                                        <i class="fa-solid fa-stop"></i>
+                                        <span class="ctrl-tooltip">Stop</span>
+                                    </button>
+                                </div>
+                                <div class="volume-control">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <input type="range" id="volumeSlider" min="0" max="100" value="100">
+                                    <span id="volumeVal" style="font-size:12px;color:var(--text-muted);min-width:30px">100%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-resizer" id="resizerLeft" title="Drag to resize"></div>
+
+                        <div class="lyrics-panel glass" id="panelLyrics">
+                            <div class="lyrics-header">
+                                <h3><i class="fa-solid fa-microphone-lines"></i> Live Lyrics</h3>
+                                <button class="btn-icon btn-sm" id="lyricsSearchToggle" onclick="toggleLyricsSearch()" title="Search Lyrics Manually">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                            <div id="lyricsSearchBox" class="lyrics-search-box hidden">
+                                <input type="text" id="lyricsManualInput" placeholder="Artist - Song title..." autocomplete="off">
+                                <button onclick="manualLyricsSearch()"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                            <div class="lyrics-container" id="lyricsContainer">
+                                <div class="lyric-placeholder">Lyrics will appear here when a song plays...</div>
+                            </div>
+                        </div>
+
+                        <div class="panel-resizer" id="resizerRight" title="Drag to resize"></div>
+
+                        <div class="music-sidebar glass" id="panelQueue">
+                            <div class="queue-header">
+                                <div class="queue-tabs">
+                                    <button class="queue-tab active" id="tabQueue" onclick="switchQueueTab('queue')">
+                                        <i class="fa-solid fa-list"></i> Queue
+                                    </button>
+                                    <button class="queue-tab" id="tabPlaylists" onclick="switchQueueTab('playlists')">
+                                        <i class="fa-solid fa-record-vinyl"></i> Playlists
+                                    </button>
+                                </div>
+                                <button class="btn-icon btn-sm" id="queueClearBtn" onclick="musicControl('clear_queue')" title="Clear Queue">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+
+                            <!-- Queue panel -->
+                            <div id="queuePanel" class="queue-subpanel active">
+                                <ul id="queueList" class="queue-list">
+                                    <li class="empty-msg">Queue is empty</li>
+                                </ul>
+                            </div>
+
+                            <!-- Playlists panel -->
+                            <div id="playlistsPanel" class="queue-subpanel">
+                                <div class="pl-toolbar">
+                                    <button class="pl-new-btn" onclick="openCreatePlaylist()">
+                                        <i class="fa-solid fa-plus"></i> New
+                                    </button>
+                                    <button class="btn-icon btn-sm" onclick="loadPlaylists()" title="Refresh">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </button>
+                                </div>
+                                <div id="playlistList" class="playlist-list">
+                                    <div class="loading-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  STOCKS TAB                            -->
+                <!-- ══════════════════════════════════════ -->
+                <section id="stocks" class="tab-pane">
+                    <div class="stocks-layout">
+
+                        <!-- Left: market overview + chart -->
+                        <div class="stocks-main">
+                            <!-- Header row -->
+                            <div class="stocks-header glass">
+                                <div class="stocks-header-left">
+                                    <h2><i class="fa-solid fa-chart-line"></i> Stock Market</h2>
+                                    <span class="market-news-ticker" id="marketNewsTicker">Loading market news...</span>
+                                </div>
+                                <div class="stocks-header-right">
+                                    <!-- Server selector for stocks -->
+                                    <div class="tab-guild-dropdown" id="stocksGuildDropdown">
+                                        <div class="tab-guild-selected" id="stocksGuildSelected" onclick="toggleTabGuildDropdown('stocks')">
+                                            <i class="fa-solid fa-server"></i>
+                                            <span id="stocksGuildLabel">Select Server</span>
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                        <div class="tab-guild-menu hidden" id="stocksGuildMenu"></div>
+                                    </div>
+                                    <div class="stocks-scope-selector">
+                                        <button class="scope-btn active" id="scopeGlobal" onclick="setStocksScope('global', this)">
+                                            <i class="fa-solid fa-globe"></i> Global
+                                        </button>
+                                        <button class="scope-btn" id="scopeServer" onclick="setStocksScope('server', this)">
+                                            <i class="fa-solid fa-server"></i> <span id="scopeServerLabel">Server</span>
+                                        </button>
+                                    </div>
+                                    <div class="market-event-badge hidden" id="marketEventBadge">
+                                        <i class="fa-solid fa-bolt"></i> <span id="marketEventName"></span>
+                                    </div>
+                                    <span class="market-last-update" id="marketLastUpdate">—</span>
+                                </div>
+                            </div>
+
+                            <!-- Stock chart -->
+                            <div class="stock-chart-card glass">
+                                <div class="stock-chart-header">
+                                    <div class="stock-chart-info">
+                                        <span class="stock-chart-symbol" id="chartSymbol">MEL</span>
+                                        <span class="stock-chart-name" id="chartName">Select a stock</span>
+                                        <span class="stock-chart-price" id="chartPrice">$—</span>
+                                        <span class="stock-chart-change" id="chartChange">—</span>
+                                    </div>
+                                    <div class="stock-chart-meta">
+                                        <span id="chartSector" class="stock-sector-badge"></span>
+                                        <span id="chartSentiment" class="stock-sentiment"></span>
+                                    </div>
+                                </div>
+                                <canvas id="stockChart" height="180"></canvas>
+                            </div>
+
+                            <!-- Market table -->
+                            <div class="market-table-card glass">
+                                <div class="market-table-header">
+                                    <span>Symbol</span><span>Name</span><span>Price</span>
+                                    <span>Change</span><span>Sector</span><span>Trend</span>
+                                </div>
+                                <div id="marketTableBody" class="market-table-body">
+                                    <div class="loading-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: portfolio + trade + leaderboard -->
+                        <div class="stocks-sidebar">
+                            <!-- Portfolio -->
+                            <div class="glass stocks-portfolio-card">
+                                <div class="stocks-section-header">
+                                    <h3><i class="fa-solid fa-briefcase"></i> My Portfolio</h3>
+                                    <button class="btn-icon btn-sm" onclick="refreshPortfolio()" title="Refresh">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </button>
+                                </div>
+                                <div id="portfolioStats" class="portfolio-stats">
+                                    <div class="portfolio-stat">
+                                        <span class="portfolio-stat-label">Cash</span>
+                                        <span class="portfolio-stat-val" id="portfolioCash">$—</span>
+                                    </div>
+                                    <div class="portfolio-stat">
+                                        <span class="portfolio-stat-label">Stocks</span>
+                                        <span class="portfolio-stat-val" id="portfolioStocks">$—</span>
+                                    </div>
+                                    <div class="portfolio-stat highlight">
+                                        <span class="portfolio-stat-label">Net Worth</span>
+                                        <span class="portfolio-stat-val" id="portfolioNet">$—</span>
+                                    </div>
+                                </div>
+                                <div id="portfolioHoldings" class="portfolio-holdings">
+                                    <div class="portfolio-empty">Login to view portfolio</div>
+                                </div>
+                            </div>
+
+                            <!-- Trade panel -->
+                            <div class="glass stocks-trade-card">
+                                <h3><i class="fa-solid fa-arrow-right-arrow-left"></i> Trade</h3>
+                                <div class="trade-form">
+                                    <div class="trade-stock-select" id="tradeStockSelected" onclick="toggleTradeDropdown()">
+                                        <span id="tradeStockLabel">Select a stock...</span>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                    <div class="trade-dropdown hidden" id="tradeDropdown"></div>
+                                    <div class="trade-price-row">
+                                        <span class="trade-current-price" id="tradePriceDisplay">Price: $—</span>
+                                        <span class="trade-owned" id="tradeOwnedDisplay">Owned: —</span>
+                                    </div>
+                                    <div class="trade-qty-row">
+                                        <button class="trade-qty-btn" onclick="adjustQty(-10)">-10</button>
+                                        <button class="trade-qty-btn" onclick="adjustQty(-1)">-1</button>
+                                        <input type="number" id="tradeQty" value="1" min="1" class="trade-qty-input">
+                                        <button class="trade-qty-btn" onclick="adjustQty(1)">+1</button>
+                                        <button class="trade-qty-btn" onclick="adjustQty(10)">+10</button>
+                                    </div>
+                                    <div class="trade-total-row">
+                                        <span>Total</span>
+                                        <span id="tradeTotalCost" class="trade-total-val">$—</span>
+                                    </div>
+                                    <div class="trade-buttons">
+                                        <button class="trade-btn buy" onclick="executeTrade('buy')">
+                                            <i class="fa-solid fa-arrow-trend-up"></i> BUY
+                                        </button>
+                                        <button class="trade-btn sell" onclick="executeTrade('sell')">
+                                            <i class="fa-solid fa-arrow-trend-down"></i> SELL
+                                        </button>
+                                    </div>
+                                    <div id="tradeResult" class="trade-result hidden"></div>
+                                </div>
+                            </div>
+
+                            <!-- Leaderboard -->
+                            <div class="glass stocks-leaderboard-card">
+                                <div class="stocks-section-header">
+                                    <h3><i class="fa-solid fa-trophy"></i> Richest Users</h3>
+                                    <div class="lb-scope-btns">
+                                        <button class="lb-scope-btn active" data-scope="global" onclick="setLbScope('global',this)">Global</button>
+                                        <button class="lb-scope-btn" data-scope="server" onclick="setLbScope('server',this)">Server</button>
+                                    </div>
+                                </div>
+                                <div id="stocksLeaderboard" class="stocks-leaderboard">
+                                    <div class="loading-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  LAST.FM TAB                           -->
+                <!-- ══════════════════════════════════════ -->
+                <section id="lastfm" class="tab-pane">
+                    <div class="lastfm-layout">
+
+                        <!-- Left: profile + now playing + recent -->
+                        <div class="lastfm-main">
+                            <!-- Profile card -->
+                            <div class="glass lastfm-profile-card" id="lastfmProfileCard">
+                                <div class="lastfm-profile-inner hidden" id="lastfmProfileInner">
+                                    <div class="lastfm-avatar-wrap">
+                                        <img id="lastfmAvatar" src="" alt="">
+                                        <div class="lastfm-scrobble-badge" id="lastfmScrobbleBadge"></div>
+                                    </div>
+                                    <div class="lastfm-profile-info">
+                                        <div class="lastfm-username-row">
+                                            <a id="lastfmUsernameLink" href="#" target="_blank" class="lastfm-username"></a>
+                                            <span class="lastfm-country" id="lastfmCountry"></span>
+                                        </div>
+                                        <div class="lastfm-profile-stats">
+                                            <div class="lastfm-stat"><span class="lastfm-stat-val" id="lastfmPlaycount">—</span><span class="lastfm-stat-label">Scrobbles</span></div>
+                                            <div class="lastfm-stat"><span class="lastfm-stat-val" id="lastfmArtists">—</span><span class="lastfm-stat-label">Artists</span></div>
+                                            <div class="lastfm-stat"><span class="lastfm-stat-val" id="lastfmTracks">—</span><span class="lastfm-stat-label">Tracks</span></div>
+                                            <div class="lastfm-stat"><span class="lastfm-stat-val" id="lastfmAlbums">—</span><span class="lastfm-stat-label">Albums</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Now playing -->
+                            <div class="glass lastfm-now-card" id="lastfmNowCard">
+                                <div class="lastfm-section-label"><i class="fa-solid fa-wave-square"></i> Now Playing</div>
+                                <div class="lastfm-now-inner" id="lastfmNowInner">
+                                    <div class="lastfm-nothing">Nothing playing right now</div>
+                                </div>
+                            </div>
+
+                            <!-- Recent tracks -->
+                            <div class="glass lastfm-recent-card">
+                                <div class="lastfm-section-label"><i class="fa-solid fa-clock-rotate-left"></i> Recent Tracks</div>
+                                <div id="lastfmRecentList" class="lastfm-recent-list">
+                                    <div class="loading-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: charts + analytics -->
+                        <div class="lastfm-sidebar">
+                            <!-- Period selector -->
+                            <div class="lastfm-period-bar glass">
+                                <span class="lastfm-period-label">Period:</span>
+                                <div class="lastfm-period-btns">
+                                    <button class="period-btn active" data-period="7day" onclick="setFmPeriod('7day',this)">7D</button>
+                                    <button class="period-btn" data-period="1month" onclick="setFmPeriod('1month',this)">1M</button>
+                                    <button class="period-btn" data-period="3month" onclick="setFmPeriod('3month',this)">3M</button>
+                                    <button class="period-btn" data-period="6month" onclick="setFmPeriod('6month',this)">6M</button>
+                                    <button class="period-btn" data-period="12month" onclick="setFmPeriod('12month',this)">1Y</button>
+                                    <button class="period-btn" data-period="overall" onclick="setFmPeriod('overall',this)">All</button>
+                                </div>
+                            </div>
+
+                            <!-- Top artists chart -->
+                            <div class="glass lastfm-chart-card">
+                                <div class="lastfm-section-label"><i class="fa-solid fa-user-music"></i> Top Artists</div>
+                                <canvas id="fmArtistsChart" height="200"></canvas>
+                                <div id="fmArtistsList" class="lastfm-top-list"></div>
+                            </div>
+
+                            <!-- Top tracks chart -->
+                            <div class="glass lastfm-chart-card">
+                                <div class="lastfm-section-label"><i class="fa-solid fa-music"></i> Top Tracks</div>
+                                <canvas id="fmTracksChart" height="160"></canvas>
+                                <div id="fmTracksList" class="lastfm-top-list"></div>
+                            </div>
+
+                            <!-- Genre breakdown -->
+                            <div class="glass lastfm-chart-card">
+                                <div class="lastfm-section-label"><i class="fa-solid fa-tag"></i> Genre Breakdown</div>
+                                <div id="fmGenreLoading" class="lastfm-nothing" style="padding:20px 0">
+                                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                </div>
+                                <canvas id="fmGenreChart" height="180" style="display:none"></canvas>
+                                <div id="fmGenreList" class="fm-genre-list"></div>
+                            </div>
+
+                        </div>
+
+                        <!-- Full-width: Chart Builder -->
+                        <div class="glass lastfm-chart-builder" id="fmChartBuilder">
+                            <div class="lastfm-section-label">
+                                <i class="fa-solid fa-grid-2"></i> Chart Builder
+                                <span class="fm-cb-hint">Generate an image chart of your top albums or artists</span>
+                            </div>
+                            <div class="fm-cb-controls">
+                                <!-- Row 1: type + size + period -->
+                                <div class="fm-cb-row">
+                                    <div class="fm-cb-group">
+                                        <label class="fm-cb-label">Type</label>
+                                        <div class="fm-cb-btns" id="cbType">
+                                            <button class="fm-cb-btn active" data-val="albums" onclick="fmCbSet('type','albums',this)">Albums</button>
+                                            <button class="fm-cb-btn" data-val="artists" onclick="fmCbSet('type','artists',this)">Artists</button>
+                                        </div>
+                                    </div>
+                                    <div class="fm-cb-group">
+                                        <label class="fm-cb-label">Size &nbsp;<span id="cbSizeLabel">3×3</span></label>
+                                        <input type="range" class="fm-cb-slider" id="cbSize" min="1" max="7" value="3"
+                                               oninput="document.getElementById('cbSizeLabel').textContent=this.value+'×'+this.value">
+                                    </div>
+                                    <div class="fm-cb-group">
+                                        <label class="fm-cb-label">Period</label>
+                                        <div class="fm-cb-btns" id="cbPeriod">
+                                            <button class="fm-cb-btn active" data-val="7day"    onclick="fmCbSet('period','7day',this)">7D</button>
+                                            <button class="fm-cb-btn" data-val="1month"  onclick="fmCbSet('period','1month',this)">1M</button>
+                                            <button class="fm-cb-btn" data-val="3month"  onclick="fmCbSet('period','3month',this)">3M</button>
+                                            <button class="fm-cb-btn" data-val="6month"  onclick="fmCbSet('period','6month',this)">6M</button>
+                                            <button class="fm-cb-btn" data-val="12month" onclick="fmCbSet('period','12month',this)">1Y</button>
+                                            <button class="fm-cb-btn" data-val="overall" onclick="fmCbSet('period','overall',this)">All</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Row 2: style options -->
+                                <div class="fm-cb-row fm-cb-style-row">
+                                    <div class="fm-cb-group fm-cb-toggle-group">
+                                        <label class="fm-cb-label">Labels</label>
+                                        <button class="fm-cb-btn" id="cbLabels" onclick="fmCbToggle('labels',this)">Off</button>
+                                    </div>
+                                    <div class="fm-cb-group fm-cb-toggle-group">
+                                        <label class="fm-cb-label">Rounded</label>
+                                        <button class="fm-cb-btn" id="cbRounded" onclick="fmCbToggle('rounded',this)">Off</button>
+                                    </div>
+                                    <div class="fm-cb-group">
+                                        <label class="fm-cb-label">Gap &nbsp;<span id="cbGapLabel">0px</span></label>
+                                        <input type="range" class="fm-cb-slider" id="cbGap" min="0" max="20" value="0"
+                                               oninput="document.getElementById('cbGapLabel').textContent=this.value+'px'">
+                                    </div>
+                                    <div class="fm-cb-group">
+                                        <label class="fm-cb-label">Background</label>
+                                        <input type="color" class="fm-cb-color" id="cbBg" value="#141414">
+                                    </div>
+                                    <button class="fm-cb-generate-btn" onclick="fmCbGenerate()">
+                                        <i class="fa-solid fa-image"></i> Generate
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Preview area -->
+                            <div class="fm-cb-preview" id="fmCbPreview">
+                                <div class="fm-cb-placeholder">
+                                    <i class="fa-solid fa-grid-2" style="font-size:32px;opacity:0.2"></i>
+                                    <span>Configure options above and hit Generate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full-width: Listening Heatmap -->
+                        <div class="glass lastfm-heatmap-card">
+                            <div class="lastfm-section-label"><i class="fa-solid fa-calendar-days"></i> Listening Heatmap <span class="lastfm-heatmap-sub">last 52 weeks</span></div>
+                            <div id="fmHeatmapWrap" class="fm-heatmap-wrap">
+                                <div class="lastfm-nothing"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  SETTINGS TAB                          -->
+                <!-- ══════════════════════════════════════ -->
+                </section>
+
+                <!-- Moderation Section -->
+                <section id="moderation" class="tab-pane">
+                    <div class="mod-layout">
+                        <div class="mod-left">
+                            <div class="mod-server-row">
+                                <div class="tab-guild-dropdown" id="moderationGuildDropdown">
+                                    <div class="tab-guild-selected" id="moderationGuildSelected" onclick="toggleTabGuildDropdown('moderation')">
+                                        <i class="fa-solid fa-server"></i>
+                                        <span id="moderationGuildLabel">Select a Server</span>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                    <div class="tab-guild-menu hidden" id="moderationGuildMenu"></div>
+                                </div>
+                            </div>
+
+                            <div class="mod-stats-row" id="modStatsRow">
+                                <div class="mod-stat-card glass">
+                                    <i class="fa-solid fa-gavel"></i>
+                                    <div><span class="mod-stat-val" id="modTotalCases">—</span><span class="mod-stat-label">Total Cases</span></div>
+                                </div>
+                                <div class="mod-stat-card glass">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    <div><span class="mod-stat-val" id="modTotalWarns">—</span><span class="mod-stat-label">Warns</span></div>
+                                </div>
+                                <div class="mod-stat-card glass">
+                                    <i class="fa-solid fa-hammer"></i>
+                                    <div><span class="mod-stat-val" id="modTotalBans">—</span><span class="mod-stat-label">Bans</span></div>
+                                </div>
+                                <div class="mod-stat-card glass">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <div><span class="mod-stat-val" id="modTotalTimeouts">—</span><span class="mod-stat-label">Timeouts</span></div>
+                                </div>
+                            </div>
+
+                            <div class="glass mod-activity-card">
+                                <span class="mod-section-label"><i class="fa-solid fa-chart-bar"></i> Activity</span>
+                                <canvas id="modActivityChart" height="100"></canvas>
+                            </div>
+
+                            <div class="glass mod-lookup-card">
+                                <span class="mod-section-label"><i class="fa-solid fa-user-magnifying-glass"></i> User Lookup</span>
+                                <div class="mod-search-row">
+                                    <div class="mod-search-wrap">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <input type="text" id="modUserInput" placeholder="Search user ID or name..." autocomplete="off">
+                                        <div class="mod-autocomplete hidden" id="modAutocomplete"></div>
+                                    </div>
+                                    <button class="mod-lookup-btn" onclick="lookupUser()">Lookup</button>
+                                </div>
+
+                                <div id="modUserProfile" class="mod-user-profile hidden">
+                                    <div class="mod-user-header">
+                                        <img id="modUserAvatar" src="" alt="" class="mod-user-avatar">
+                                        <div class="mod-user-info">
+                                            <div class="mod-user-name-row">
+                                                <span class="mod-user-display" id="modUserDisplay"></span>
+                                                <span class="mod-user-tag" id="modUserTag"></span>
+                                            </div>
+                                            <div class="mod-user-badges" id="modUserBadges"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mod-user-roles" id="modUserRoles"></div>
+                                    <div class="mod-user-tabs">
+                                        <button class="mod-user-tab active" data-panel="warns" onclick="switchUserTab('warns',this)">Warnings <span id="modWarnCount"></span></button>
+                                        <button class="mod-user-tab" data-panel="history" onclick="switchUserTab('history',this)">History</button>
+                                    </div>
+                                    <div id="modUserPanelWarns" class="mod-user-panel active">
+                                        <div id="modWarnsList"></div>
+                                    </div>
+                                    <div id="modUserPanelHistory" class="mod-user-panel">
+                                        <div id="modHistoryList"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mod-right">
+                            <div class="glass mod-action-card">
+                                <span class="mod-section-label"><i class="fa-solid fa-bolt"></i> Actions</span>
+                                <div class="mod-target-row">
+                                    <div class="mod-target-display" id="modActionTarget">No user selected</div>
+                                </div>
+                                <div class="mod-action-grid">
+                                    <button class="mod-action-btn warn" onclick="openActionModal('warn')">Warn</button>
+                                    <button class="mod-action-btn timeout" onclick="openActionModal('timeout')">Timeout</button>
+                                    <button class="mod-action-btn kick" onclick="openActionModal('kick')">Kick</button>
+                                    <button class="mod-action-btn ban" onclick="openActionModal('ban')">Ban</button>
+                                </div>
+                            </div>
+
+                            <div class="glass mod-bans-card">
+                                <span class="mod-section-label"><i class="fa-solid fa-ban"></i> Active Bans</span>
+                                <div id="modBanList" class="mod-ban-list"></div>
+                            </div>
+                        </div>
+
+                        <div class="mod-log-section glass">
+                            <span class="mod-section-label"><i class="fa-solid fa-scroll"></i> Recent Logs</span>
+                            <div id="modLogList" class="mod-log-list"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Verification Section -->
+                <section id="verification" class="tab-pane">
+                    <div class="verification-layout">
+                        <div class="mod-server-row">
+                            <div class="tab-guild-dropdown" id="verificationGuildDropdown">
+                                <div class="tab-guild-selected" id="verificationGuildSelected" onclick="toggleTabGuildDropdown('verification')">
+                                    <i class="fa-solid fa-server"></i>
+                                    <span id="verificationGuildLabel">Select a Server</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div class="tab-guild-menu hidden" id="verificationGuildMenu"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass v-flags-card">
+                            <span class="mod-section-label"><i class="fa-solid fa-triangle-exclamation"></i> Flagged Users</span>
+                            <div class="v-flags-table-wrap">
+                                <table class="v-table">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Matched With</th>
+                                            <th>Fingerprint</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="vFlagsList">
+                                        <tr><td colspan="4" class="v-empty">Select a server to view flagged users</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="glass v-history-card">
+                            <span class="mod-section-label"><i class="fa-solid fa-scroll"></i> Recent Verifications</span>
+                            <div id="vHistoryList" class="v-history-list">
+                                <div class="v-empty">Select a server to view history</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="settings" class="tab-pane">
+                    <div class="settings-layout">
+
+                        <!-- Appearance -->
+                        <div class="settings-group glass">
+                            <div class="settings-group-title"><i class="fa-solid fa-palette"></i> Appearance</div>
+
+                            <!-- Accent color -->
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Accent Color</span>
+                                    <span class="settings-row-desc">Primary color used across the dashboard</span>
+                                </div>
+                                <div class="settings-color-swatches" id="accentSwatches">
+                                    <button class="swatch active" data-color="#7289da" style="background:#7289da" onclick="setAccent('#7289da',this)"></button>
+                                    <button class="swatch" data-color="#5865f2" style="background:#5865f2" onclick="setAccent('#5865f2',this)"></button>
+                                    <button class="swatch" data-color="#eb459e" style="background:#eb459e" onclick="setAccent('#eb459e',this)"></button>
+                                    <button class="swatch" data-color="#57f287" style="background:#57f287" onclick="setAccent('#57f287',this)"></button>
+                                    <button class="swatch" data-color="#fee75c" style="background:#fee75c" onclick="setAccent('#fee75c',this)"></button>
+                                    <button class="swatch" data-color="#ed4245" style="background:#ed4245" onclick="setAccent('#ed4245',this)"></button>
+                                    <button class="swatch" data-color="#00d2ff" style="background:#00d2ff" onclick="setAccent('#00d2ff',this)"></button>
+                                    <button class="swatch" data-color="#ff9500" style="background:#ff9500" onclick="setAccent('#ff9500',this)"></button>
+                                    <label class="swatch swatch-custom" title="Custom color">
+                                        <i class="fa-solid fa-eyedropper"></i>
+                                        <input type="color" id="customAccentInput" onchange="setAccent(this.value, null, true)">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Background style -->
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Background</span>
+                                    <span class="settings-row-desc">Visual style behind the dashboard</span>
+                                </div>
+                                <div class="settings-bg-options" id="bgOptions">
+                                    <button class="bg-opt active" data-bg="stars" onclick="setBg('stars',this)">
+                                        <div class="bg-opt-preview bg-preview-stars"></div>
+                                        <span>Stars</span>
+                                    </button>
+                                    <button class="bg-opt" data-bg="gradient" onclick="setBg('gradient',this)">
+                                        <div class="bg-opt-preview bg-preview-gradient"></div>
+                                        <span>Gradient</span>
+                                    </button>
+                                    <button class="bg-opt" data-bg="dynamic" onclick="setBg('dynamic',this)">
+                                        <div class="bg-opt-preview bg-preview-dynamic"></div>
+                                        <span>Dynamic</span>
+                                    </button>
+                                    <button class="bg-opt" data-bg="mesh" onclick="setBg('mesh',this)">
+                                        <div class="bg-opt-preview bg-preview-mesh"></div>
+                                        <span>Mesh</span>
+                                    </button>
+                                    <button class="bg-opt" data-bg="dark" onclick="setBg('dark',this)">
+                                        <div class="bg-opt-preview bg-preview-dark"></div>
+                                        <span>Minimal</span>
+                                    </button>
+                                    <button class="bg-opt" data-bg="custom-img" onclick="triggerBgUpload()">
+                                        <div class="bg-opt-preview bg-preview-custom"><i class="fa-solid fa-image"></i></div>
+                                        <span>Custom</span>
+                                    </button>
+                                </div>
+                                <input type="file" id="bgImageInput" accept="image/*" style="display:none" onchange="handleBgUpload(this)">
+                            </div>
+
+                            <!-- Sidebar opacity -->
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Sidebar Opacity</span>
+                                    <span class="settings-row-desc">Transparency of the sidebar panel</span>
+                                </div>
+                                <div class="settings-slider-wrap">
+                                    <input type="range" id="sidebarOpacity" min="20" max="95" value="70" class="settings-slider" oninput="setSidebarOpacity(this.value)">
+                                    <span class="settings-slider-val" id="sidebarOpacityVal">70%</span>
+                                </div>
+                            </div>
+
+                            <!-- Glass blur -->
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Glass Blur</span>
+                                    <span class="settings-row-desc">Frosted glass intensity on cards</span>
+                                </div>
+                                <div class="settings-slider-wrap">
+                                    <input type="range" id="glassBlur" min="0" max="30" value="10" class="settings-slider" oninput="setGlassBlur(this.value)">
+                                    <span class="settings-slider-val" id="glassBlurVal">10px</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Typography -->
+                        <div class="settings-group glass">
+                            <div class="settings-group-title"><i class="fa-solid fa-font"></i> Typography</div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Font</span>
+                                    <span class="settings-row-desc">Interface font family</span>
+                                </div>
+                                <div class="settings-font-options" id="fontOptions">
+                                    <button class="font-opt active" data-font="Outfit" onclick="setFont('Outfit',this)" style="font-family:'Outfit'">Outfit</button>
+                                    <button class="font-opt" data-font="Inter" onclick="setFont('Inter',this)" style="font-family:'Inter'">Inter</button>
+                                    <button class="font-opt" data-font="'Space Grotesk'" onclick="setFont('Space Grotesk',this)" style="font-family:'Space Grotesk'">Space Grotesk</button>
+                                    <button class="font-opt" data-font="'JetBrains Mono'" onclick="setFont('JetBrains Mono',this)" style="font-family:'JetBrains Mono'">JetBrains Mono</button>
+                                    <button class="font-opt" data-font="'DM Sans'" onclick="setFont('DM Sans',this)" style="font-family:'DM Sans'">DM Sans</button>
+                                </div>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Font Size</span>
+                                    <span class="settings-row-desc">Base interface text size</span>
+                                </div>
+                                <div class="settings-slider-wrap">
+                                    <input type="range" id="fontSize" min="12" max="18" value="14" class="settings-slider" oninput="setFontSize(this.value)">
+                                    <span class="settings-slider-val" id="fontSizeVal">14px</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences -->
+                        <div class="settings-group glass">
+                            <div class="settings-group-title"><i class="fa-solid fa-toggle-on"></i> Preferences</div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Show Waveform</span>
+                                    <span class="settings-row-desc">Animated bars in music player</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefWaveform" checked onchange="savePref('waveform', this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Auto-scroll Lyrics</span>
+                                    <span class="settings-row-desc">Lyrics follow the current line automatically</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefAutoScroll" checked onchange="savePref('autoScroll', this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Compact Queue</span>
+                                    <span class="settings-row-desc">Smaller queue items, more tracks visible</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefCompactQueue" onchange="savePref('compactQueue', this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Stars Background</span>
+                                    <span class="settings-row-desc">Falling stars canvas animation</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefStars" checked onchange="savePref('stars', this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- VC Call Relay -->
+                        <div class="settings-group glass">
+                            <div class="settings-group-title"><i class="fa-solid fa-phone-volume"></i> VC Call Relay</div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Live Speaking Visualiser</span>
+                                    <span class="settings-row-desc">Animate audio bars when someone is talking</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefVcVisualizer" checked
+                                           onchange="savePref('vcVisualizer', this.checked); if(typeof applyVcPrefVisualizer==='function') applyVcPrefVisualizer(this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Speaking Ring Pulse</span>
+                                    <span class="settings-row-desc">Glow ring around avatar when speaking</span>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="prefVcRingPulse" checked
+                                           onchange="savePref('vcRingPulse', this.checked); if(typeof applyVcPrefRingPulse==='function') applyVcPrefRingPulse(this.checked)">
+                                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Danger zone -->
+                        <div class="settings-group glass settings-danger">
+                            <div class="settings-group-title"><i class="fa-solid fa-triangle-exclamation"></i> Account</div>
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Reset All Settings</span>
+                                    <span class="settings-row-desc">Restore defaults and clear all customizations</span>
+                                </div>
+                                <button class="settings-reset-btn" onclick="resetAllSettings()">Reset</button>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-info">
+                                    <span class="settings-row-label">Log Out</span>
+                                    <span class="settings-row-desc">Sign out of your Discord account</span>
+                                </div>
+                                <button class="settings-logout-btn" onclick="logout()">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section id="vccall" class="tab-pane">
+                    <div class="vc-tab-wrap">
+
+                        <!-- Header -->
+                        <div class="vc-tab-header">
+                            <div class="vc-tab-title-row">
+                                <div class="vc-tab-title-left">
+                                    <i class="fa-solid fa-phone-volume vc-tab-icon"></i>
+                                    <div>
+                                        <h2 class="vc-tab-title">Voice Calls</h2>
+                                        <p class="vc-tab-sub">Cross-server calls — bot joins your VC and connects both sides</p>
+                                    </div>
+                                </div>
+                                <div class="vc-conn-status">
+                                    <div class="vc-conn-dot" id="vcCallDot"></div>
+                                    <span id="vcCallConnStatus">Connecting…</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guild picker (reuses same guild list) -->
+                        <div class="vc-guild-row glass">
+                            <label class="vc-guild-label"><i class="fa-solid fa-server"></i> Server</label>
+                            <div class="guild-dropdown" id="vcGuildDropdown" style="flex:1;max-width:280px">
+                                <div class="guild-dropdown-selected" id="vcGuildDropdownSelected" onclick="toggleVcGuildDropdown()">
+                                    <span id="vcGuildDropdownText">Select a server…</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size:11px;opacity:.5"></i>
+                                </div>
+                                <div class="guild-dropdown-menu hidden" id="vcGuildDropdownMenu"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic content area -->
+                        <div id="vcCallContent" class="vc-call-content">
+                            <div class="vc-loading">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                <span>Loading…</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+    <div class="mod-modal-overlay hidden" id="fixModalOverlay" onclick="closeFixModal()">
+        <div class="mod-modal glass fix-modal" onclick="event.stopPropagation()">
+            <div class="mod-modal-header">
+                <span><i class="fa-solid fa-wrench"></i> Audio Troubleshooter</span>
+                <button class="mod-modal-close" onclick="closeFixModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="fix-modal-body">
+                <p class="fix-modal-sub">Experiencing audio issues? Select a fix below.</p>
+                <div class="fix-options">
+                    <button class="fix-option-btn" onclick="runFix('region')">
+                        <div class="fix-option-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div class="fix-option-info">
+                            <span class="fix-option-title">Optimize Region</span>
+                            <span class="fix-option-desc">Sets voice region to Automatic for lowest latency</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right fix-option-arrow"></i>
+                    </button>
+                    <button class="fix-option-btn" onclick="runFix('rejoin')">
+                        <div class="fix-option-icon"><i class="fa-solid fa-rotate"></i></div>
+                        <div class="fix-option-info">
+                            <span class="fix-option-title">Rejoin & Resume</span>
+                            <span class="fix-option-desc">Reconnects bot and restores queue and current song</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right fix-option-arrow"></i>
+                    </button>
+                    <button class="fix-option-btn" onclick="runFix('filters')">
+                        <div class="fix-option-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <div class="fix-option-info">
+                            <span class="fix-option-title">Clear Filters</span>
+                            <span class="fix-option-desc">Removes EQ and effects that may cause audio glitches</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right fix-option-arrow"></i>
+                    </button>
+                </div>
+                <div id="fixResult" class="fix-result hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Modal -->
+    <div class="mod-modal-overlay hidden" id="modModalOverlay" onclick="closeActionModal()">
+        <div class="mod-modal glass" onclick="event.stopPropagation()">
+            <div class="mod-modal-header">
+                <span id="modModalTitle">Action</span>
+                <button class="mod-modal-close" onclick="closeActionModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="mod-modal-body">
+                <div class="mod-modal-target" id="modModalTarget"></div>
+                <div id="modModalFields"></div>
+                <input type="text" id="modModalReason" placeholder="Reason (optional)..." class="mod-modal-reason">
+                <div class="mod-modal-buttons">
+                    <button class="mod-modal-cancel" onclick="closeActionModal()">Cancel</button>
+                    <button class="mod-modal-confirm" id="modModalConfirm" onclick="confirmAction()">Confirm</button>
+                </div>
+                <div id="modModalResult" class="mod-modal-result hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/stocks.js"></script>
+    <script src="assets/js/lastfm.js"></script>
+    <script src="assets/js/moderation.js"></script>
+    <script src="assets/js/verification.js"></script>
+
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/vccall.js"></script>
+    <script>
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebarOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Mobile: switch main tabs via bottom nav
+        window.mobileSwitchTab = function(tab, btn) {
+            if (window.innerWidth > 768) return;
+            // Activate section
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            const section = document.getElementById(tab);
+            if (section) section.classList.add('active');
+            // Update bottom nav
+            document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            // Update top bar title
+            const titles = { music:'Music Player', moderation:'Moderation', verification:'Verification Log', stocks:'Stock Market', lastfm:'Last.fm', settings:'Settings', vccall:'VC Calls' };
+            const titleEl = document.getElementById('activeTabTitle');
+            if (titleEl) titleEl.textContent = titles[tab] || tab;
+            // Fire init hooks
+            if (tab === 'moderation'   && typeof window.initModeration   === 'function') window.initModeration();
+            if (tab === 'verification' && typeof window.initVerification === 'function') window.initVerification();
+            if (tab === 'stocks'       && typeof window.initStocks       === 'function') window.initStocks();
+            if (tab === 'lastfm'       && typeof window.initLastfm       === 'function') window.initLastfm();
+            if (tab === 'settings'     && typeof window.initSettings     === 'function') window.initSettings();
+            if (tab === 'vccall'       && typeof window.initVcCall       === 'function') window.initVcCall();
+            // Also sync desktop sidebar nav highlight
+            document.querySelectorAll('.nav-links li').forEach(l => {
+                l.classList.toggle('active', l.dataset.tab === tab);
+            });
+            // Reset music sub-tab to player when switching back
+            if (tab === 'music') switchMusicPanel('player', document.querySelector('.mob-music-tab'));
+        };
+
+        // Mobile: switch music sub-panels
+        window.switchMusicPanel = function(panel, btn) {
+            const player = document.getElementById('panelPlayer');
+            const lyrics = document.getElementById('panelLyrics');
+            const queue  = document.getElementById('panelQueue');
+            const resL   = document.getElementById('resizerLeft');
+            const resR   = document.getElementById('resizerRight');
+            if (window.innerWidth > 768) return;
+            [player, lyrics, queue, resL, resR].forEach(el => el && (el.style.display = 'none'));
+            if (panel === 'player') { if (player) player.style.display = 'flex'; }
+            if (panel === 'lyrics') { if (lyrics) lyrics.style.display = 'flex'; }
+            if (panel === 'queue')  { if (queue)  queue.style.display  = 'flex'; }
+            document.querySelectorAll('.mob-music-tab').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        };
+
+        // On resize, restore desktop layout
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                const player = document.getElementById('panelPlayer');
+                const lyrics = document.getElementById('panelLyrics');
+                const queue  = document.getElementById('panelQueue');
+                const resL   = document.getElementById('resizerLeft');
+                const resR   = document.getElementById('resizerRight');
+                [player, lyrics, queue, resL, resR].forEach(el => el && (el.style.display = ''));
+                closeSidebar();
+            }
+        });
+
+        // Init: on mobile, hide lyrics/queue panels by default
+        if (window.innerWidth <= 768) {
+            document.addEventListener('DOMContentLoaded', () => {
+                switchMusicPanel('player', document.querySelector('.mob-music-tab'));
+            });
+        }
+    </script>
+</html>

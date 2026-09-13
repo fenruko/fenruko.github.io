@@ -8,7 +8,7 @@ const FALLBACK_AVATAR = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png"
 const TEAM = [
   {
     name: "fenruko",
-    discordId: "000000000000000000", // TODO: replace with fenruko's real Discord user ID
+    discordId: "834869554798395392", // TODO: replace with fenruko's real Discord user ID
     role: "Founder",
     bio: "fenruko is the founder of Rift and the lead developer behind the project.",
   },

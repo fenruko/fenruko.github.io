@@ -13,10 +13,10 @@ const TEAM = [
     bio: "fenruko is the founder of Rift and the lead developer behind the project.",
   },
   {
-    name: "yoru.me.uk",
+    name: "yoru.me.uk/yoru.bun",
     discordId: "1512032332163448880",
     role: "CEO",
-    bio: "yoru.me.uk is the CEO of Rift, overseeing staff and operations of the bot globally using specialized internal statistics tools.",
+    bio: "yoru.me.uk is the CEO of Rift, overseeing staff and operations of the bot globally.",
   },
 ];
 

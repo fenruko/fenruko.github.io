@@ -4,12 +4,30 @@ import { ArrowUp } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+// Wraps React.lazy so that a failed dynamic import (e.g. a stale chunk
+// hash from before the latest deploy) triggers a single automatic
+// reload to fetch the current index.html, instead of a dead white screen.
+function lazyWithReload(factory) {
+  return React.lazy(() =>
+    factory().catch((err) => {
+      const key = "chunk-reload-" + factory.toString();
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, "1");
+        window.location.reload();
+        // Never resolves; the reload takes over.
+        return new Promise(() => {});
+      }
+      throw err;
+    })
+  );
+}
+
 // Eager loaded pages
 import NotFoundPage from "./pages/NotFoundPage";
 import HomePage from "./pages/HomePage";
 // Lazy loaded pages
-const CommandsPage = React.lazy(() => import("./pages/CommandsPage"));
-const TeamPage = React.lazy(() => import("./pages/TeamPage"));
+const CommandsPage = lazyWithReload(() => import("./pages/CommandsPage"));
+const TeamPage = lazyWithReload(() => import("./pages/TeamPage"));
 
 const routes = [
   { path: "/", component: HomePage },

@@ -28,6 +28,16 @@
 </style>
 
 <body>
+  <script>
+    // Restore the real path saved by 404.html before React Router mounts
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect !== location.pathname + location.search + location.hash) {
+        history.replaceState(null, "", redirect);
+      }
+    })();
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

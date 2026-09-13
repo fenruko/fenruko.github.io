@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Rift</title>
+    <script>
+      // Single Page App GitHub Pages fallback.
+      // Encodes the requested path into a query string on "/" so that
+      // index.html's inline script (see below) can restore it via
+      // history.replaceState before React Router mounts.
+      var path = location.pathname + location.search + location.hash;
+      sessionStorage.redirect = path;
+      location.replace(
+        location.protocol + "//" + location.host + "/"
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

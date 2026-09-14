@@ -333,6 +333,7 @@ function renderUserProfile(data) {
 
 function renderWarns(warns) {
     const el = document.getElementById('modWarnsList');
+    if (!el) return;
     if (!warns.length) { el.innerHTML = '<div class="mod-empty">No warnings</div>'; return; }
     el.innerHTML = warns.map(w => `
         <div class="mod-warn-row">
@@ -348,6 +349,7 @@ function renderWarns(warns) {
 
 function renderHistory(history) {
     const el = document.getElementById('modHistoryList');
+    if (!el) return;
     if (!history.length) { el.innerHTML = '<div class="mod-empty">No mod history</div>'; return; }
     el.innerHTML = history.map(h => `
         <div class="mod-history-row">
@@ -361,6 +363,7 @@ function renderHistory(history) {
 
 function renderNotes(notes) {
     const el = document.getElementById('modNotesList');
+    if (!el) return;
     if (!notes.length) { el.innerHTML = '<div class="mod-empty">No notes</div>'; return; }
     el.innerHTML = notes.map(n => `
         <div class="mod-note-row">
@@ -792,9 +795,12 @@ window.quickLookup = function(userId) {
 
 function updateLogPagination() {
     const totalPages = Math.ceil(modLogTotal / modLogPageSize) || 1;
-    document.getElementById('modLogPageInfo').textContent = `Page ${modLogPage + 1} of ${totalPages} (${modLogTotal} total)`;
-    document.getElementById('modLogPrev').disabled = modLogPage === 0;
-    document.getElementById('modLogNext').disabled = modLogPage >= totalPages - 1;
+    const info = document.getElementById('modLogPageInfo');
+    const prev = document.getElementById('modLogPrev');
+    const next = document.getElementById('modLogNext');
+    if (info) info.textContent = `Page ${modLogPage + 1} of ${totalPages} (${modLogTotal} total)`;
+    if (prev) prev.disabled = modLogPage === 0;
+    if (next) next.disabled = modLogPage >= totalPages - 1;
 }
 
 window.changeLogPage = function(delta) {

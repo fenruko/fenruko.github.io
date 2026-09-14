@@ -224,7 +224,21 @@ window.lookupUser = async function() {
         });
         const data = await res.json();
         if (data.error) {
-            profile.innerHTML = `<div class="mod-error"><i class="fa-solid fa-circle-exclamation"></i> ${escMod(data.error)}</div>`;
+            const spinner = document.getElementById('modLookupSpinner');
+            if (spinner) spinner.remove();
+            const existingContent = profile.querySelector('.mod-user-header');
+            if (existingContent) existingContent.style.display = 'none';
+            // Show the error without wiping the profile container's children --
+            // doing that destroyed #modWarnsList/#modNotesList/#modHistoryList
+            // permanently, crashing the next successful lookup's render calls.
+            let errEl = document.getElementById('modLookupError');
+            if (!errEl) {
+                errEl = document.createElement('div');
+                errEl.id = 'modLookupError';
+                errEl.className = 'mod-error';
+                profile.prepend(errEl);
+            }
+            errEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${escMod(data.error)}`;
             return;
         }
         modCurrentUser = data;
@@ -232,6 +246,8 @@ window.lookupUser = async function() {
         // Remove spinner, restore content
         const spinner = document.getElementById('modLookupSpinner');
         if (spinner) spinner.remove();
+        const errEl = document.getElementById('modLookupError');
+        if (errEl) errEl.remove();
         const existingContent = profile.querySelector('.mod-user-header');
         if (existingContent) existingContent.style.display = '';
         renderUserProfile(data);
@@ -732,10 +748,17 @@ window.loadModLog = async function() {
             headers: { 'ngrok-skip-browser-warning': 'true', 'Authorization': `Bearer ${localStorage.getItem('d_token') || ''}` }
         });
         const data = await res.json();
+        if (data.error) {
+            el.innerHTML = `<div class="mod-empty">${escMod(data.error)}</div>`;
+            return;
+        }
         modLogTotal = data.total || 0;
         renderModLog(data.logs || []);
         updateLogPagination();
-    } catch(e) { el.innerHTML = '<div class="mod-empty">Failed to load logs</div>'; }
+    } catch(e) {
+        console.error('[Mod] loadModLog error:', e);
+        el.innerHTML = `<div class="mod-empty">Failed to load logs -- ${escMod(e.message || 'network error')}</div>`;
+    }
 };
 
 function renderModLog(logs) {

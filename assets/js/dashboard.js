@@ -1,8 +1,8 @@
-// API is permanently at api.rift.baby via Cloudflare Worker — no Gist needed.
+// API is permanently at desktop-mo3r1pj.tailb9e0a9.ts.net via Cloudflare Worker — no Gist needed.
 const CLIENT_ID = "1329184069426348052";
 const API_BASE  = "https://desktop-mo3r1pj.tailb9e0a9.ts.net/api";
 const WS_URL    = "wss://desktop-mo3r1pj.tailb9e0a9.ts.net/ws";
-console.log('[Config] API_BASE=https://api.rift.baby/api (static)');
+console.log('[Config] API_BASE=https://desktop-mo3r1pj.tailb9e0a9.ts.net/api (static)');
 
 async function loadConfig() {
     // Nothing to load — URL is permanent

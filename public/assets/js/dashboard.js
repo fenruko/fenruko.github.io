@@ -1,8 +1,8 @@
-// API is permanently at api.rift.baby via Cloudflare Worker — no Gist needed.
+// API is permanently at desktop-mo3r1pj.tailb9e0a9.ts.net via Cloudflare Worker — no Gist needed.
 const CLIENT_ID = "1329184069426348052";
 const API_BASE  = "https://desktop-mo3r1pj.tailb9e0a9.ts.net/api";
 const WS_URL    = "wss://desktop-mo3r1pj.tailb9e0a9.ts.net/ws";
-console.log('[Config] API_BASE=https://api.rift.baby/api (static)');
+console.log('[Config] API_BASE=https://desktop-mo3r1pj.tailb9e0a9.ts.net/api (static)');
 
 async function loadConfig() {
     // Nothing to load — URL is permanent
@@ -437,7 +437,22 @@ async function fetchGuilds(token) {
         headers: { Authorization: `Bearer ${token}` }
     });
     const guilds = await res.json();
-    const adminGuilds = guilds.filter(g => (BigInt(g.permissions) & 0x8n) || (BigInt(g.permissions) & 0x20n));
+
+    // Cross-check against servers the bot is actually in -- otherwise this
+    // lists every server the user admins, even ones Rift was never added to.
+    let botGuildIds = null;
+    try {
+        const botRes = await fetch(`${API_BASE}/bot/guild-ids`);
+        botGuildIds = new Set(await botRes.json());
+    } catch (e) {
+        console.warn('[Guilds] Could not fetch bot guild-ids, skipping mutual-guild filter', e);
+    }
+
+    const adminGuilds = guilds.filter(g => {
+        const isAdmin = (BigInt(g.permissions) & 0x8n) || (BigInt(g.permissions) & 0x20n);
+        const botIsIn = botGuildIds ? botGuildIds.has(String(g.id)) : true;
+        return isAdmin && botIsIn;
+    });
     
     const menu = document.getElementById('guildDropdownMenu');
     menu.innerHTML = '';

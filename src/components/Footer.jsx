@@ -37,6 +37,8 @@ export default function Footer() {
               <a href="https://docs.rift.baby" className="hover:text-white transition-colors">Docs</a>
               <Link to="/team" className="hover:text-white transition-colors">Team</Link>
               <a href="/dashboard.html" className="hover:text-white transition-colors">Dashboard</a>
+              <a href="/bug-report.html" className="hover:text-white transition-colors">Report a Bug</a>
+              <a href="https://staff.rift.baby" className="hover:text-white transition-colors">Ban Appeals</a>
             </div>
                     </div>
 

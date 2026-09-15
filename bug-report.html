@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Report a Bug — Rift</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'Satoshi',sans-serif; background:#0a0a0c; color:#fff; display:flex; justify-content:center; padding:40px 16px; }
+  .card { max-width:560px; width:100%; }
+  h1 { font-size:26px; margin-bottom:4px; }
+  p.sub { color:rgba(255,255,255,.5); font-size:14px; margin-top:0; margin-bottom:24px; }
+  label { display:block; font-size:12px; color:rgba(255,255,255,.5); margin-bottom:6px; margin-top:18px; }
+  input[type=text], textarea {
+    width:100%; background:#151518; border:1px solid rgba(255,255,255,.1); border-radius:10px;
+    padding:12px 14px; color:#fff; font-size:14px; font-family:inherit; outline:none;
+  }
+  textarea { min-height:120px; resize:vertical; }
+  input[type=text]:focus, textarea:focus, .dropzone:focus-within { border-color:rgba(255,255,255,.3); }
+  .dropzone {
+    border:1.5px dashed rgba(255,255,255,.15); border-radius:10px; padding:20px; text-align:center;
+    color:rgba(255,255,255,.4); font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .dropzone:hover { border-color:rgba(255,255,255,.3); color:rgba(255,255,255,.6); }
+  .thumbs { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .thumb { position:relative; width:72px; height:72px; border-radius:8px; overflow:hidden; }
+  .thumb img { width:100%; height:100%; object-fit:cover; }
+  .thumb button {
+    position:absolute; top:2px; right:2px; background:rgba(0,0,0,.7); color:#fff; border:none;
+    border-radius:50%; width:18px; height:18px; font-size:11px; cursor:pointer; line-height:1;
+  }
+  button.submit {
+    width:100%; margin-top:24px; padding:13px; border:none; border-radius:10px; font-size:14px;
+    font-weight:700; background:#fff; color:#000; cursor:pointer;
+  }
+  button.submit:disabled { opacity:.4; cursor:not-allowed; }
+  .msg { margin-top:14px; font-size:13px; padding:10px 12px; border-radius:8px; }
+  .msg.error { background:rgba(239,68,68,.1); color:#f87171; }
+  .msg.ok { background:rgba(16,185,129,.1); color:#34d399; }
+  .hint { font-size:11px; color:rgba(255,255,255,.3); margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Report a bug</h1>
+  <p class="sub">Found something broken? Let us know below. Reports are reviewed by staff — verified reports earn a 2,500 balance reward. Limited to 3 reports per day.</p>
+
+  <label>Your Discord user ID</label>
+  <input type="text" id="userId" placeholder="e.g. 123456789012345678" />
+  <div class="hint">Right-click your profile in Discord → Copy User ID (enable Developer Mode in Discord settings if you don't see this option).</div>
+
+  <label>Describe the bug</label>
+  <textarea id="description" placeholder="What happened? What did you expect to happen instead?"></textarea>
+
+  <label>Screenshots (optional, up to 5)</label>
+  <div class="dropzone" id="dropzone" tabindex="0">
+    Click to browse, or paste an image (Ctrl+V)
+    <input type="file" id="fileInput" accept="image/png,image/jpeg,image/gif,image/webp" multiple style="display:none" />
+  </div>
+  <div class="thumbs" id="thumbs"></div>
+
+  <button class="submit" id="submitBtn">Submit report</button>
+  <div id="msg"></div>
+</div>
+
+<script>
+const API_BASE = "https://desktop-mo3r1pj.tailb9e0a9.ts.net/api";
+const MAX_IMAGES = 5;
+const uploadKey = crypto.randomUUID();
+let images = []; // { id, dataUrl } once uploaded
+
+function fingerprint() {
+  try {
+    const c = document.createElement("canvas");
+    const ctx = c.getContext("2d");
+    ctx.textBaseline = "top";
+    ctx.font = "14px 'Arial'";
+    ctx.fillText("rift-fp", 2, 2);
+    const raw = c.toDataURL() + navigator.userAgent + screen.width + "x" + screen.height + (navigator.language || "");
+    let hash = 0;
+    for (let i = 0; i < raw.length; i++) { hash = (hash << 5) - hash + raw.charCodeAt(i); hash |= 0; }
+    return String(hash);
+  } catch { return "unknown"; }
+}
+
+function showMsg(text, type) {
+  const el = document.getElementById("msg");
+  el.className = "msg " + type;
+  el.textContent = text;
+}
+
+function renderThumbs() {
+  const wrap = document.getElementById("thumbs");
+  wrap.innerHTML = "";
+  images.forEach((img, i) => {
+    const div = document.createElement("div");
+    div.className = "thumb";
+    div.innerHTML = `<img src="${img.dataUrl}" /><button data-i="${i}">×</button>`;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll("button").forEach(btn => {
+    btn.onclick = () => { images.splice(+btn.dataset.i, 1); renderThumbs(); };
+  });
+}
+
+async function addFile(file) {
+  if (images.length >= MAX_IMAGES) { showMsg(`Max ${MAX_IMAGES} images.`, "error"); return; }
+  if (!file.type.startsWith("image/")) return;
+  const dataUrl = await new Promise((res) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.readAsDataURL(file);
+  });
+  try {
+    const resp = await fetch(`${API_BASE}/bugreports/upload`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ upload_key: uploadKey, image: dataUrl }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) { showMsg(data.error || "Upload failed", "error"); return; }
+    images.push({ id: data.id, dataUrl });
+    renderThumbs();
+  } catch { showMsg("Upload failed — try again.", "error"); }
+}
+
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("fileInput");
+dropzone.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", (e) => { [...e.target.files].forEach(addFile); fileInput.value = ""; });
+dropzone.addEventListener("paste", (e) => {
+  [...(e.clipboardData?.items || [])].forEach(item => {
+    if (item.type.startsWith("image/")) addFile(item.getAsFile());
+  });
+});
+document.addEventListener("paste", (e) => {
+  if (document.activeElement === dropzone) return;
+  [...(e.clipboardData?.items || [])].forEach(item => {
+    if (item.type.startsWith("image/")) addFile(item.getAsFile());
+  });
+});
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  const userId = document.getElementById("userId").value.trim();
+  const description = document.getElementById("description").value.trim();
+  if (!/^\d+$/.test(userId)) return showMsg("Enter a valid Discord user ID.", "error");
+  if (description.length < 10) return showMsg("Please describe the bug in a bit more detail.", "error");
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  try {
+    const resp = await fetch(`${API_BASE}/bugreports/submit`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userId, description, upload_key: uploadKey,
+        attachment_ids: images.map(i => i.id), fingerprint: fingerprint(),
+      }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) { showMsg(data.error || "Something went wrong.", "error"); btn.disabled = false; return; }
+    showMsg("Report submitted — thanks! Staff will review it soon.", "ok");
+    document.getElementById("userId").value = "";
+    document.getElementById("description").value = "";
+    images = []; renderThumbs();
+  } catch {
+    showMsg("Something went wrong — try again.", "error");
+  }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>

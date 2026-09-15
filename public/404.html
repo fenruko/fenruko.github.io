@@ -10,8 +10,12 @@
       // history.replaceState before React Router mounts.
       var path = location.pathname + location.search + location.hash;
       sessionStorage.redirect = path;
+      // The dashboard is a separate app/build from the main site, so a
+      // deep link under /dashboard/ must bounce back to /dashboard/'s own
+      // index.html, not the main site's root.
+      var base = path.indexOf("/dashboard/") === 0 ? "/dashboard/" : "/";
       location.replace(
-        location.protocol + "//" + location.host + "/"
+        location.protocol + "//" + location.host + base
       );
     </script>
   </head>

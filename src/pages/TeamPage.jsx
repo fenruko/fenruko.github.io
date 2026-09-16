@@ -30,6 +30,12 @@ const TEAM = [
     role: "CDO/CSO",
     bio: "reddevss is the CDO and CSO of Rift, managing general security and bussiness strategies, Basically the guardian of the bot.",
   },
+  {
+    name: "dndboner",
+    discordId: "164761668256137216",
+    role: "Chief Social Officer",
+    bio: "dndboner is the CSO of Rift, managing social media posts and reach strategies, along with server partnerships to increase reach.",
+  },
 ];
 
 function useLanyardAvatar(discordId) {

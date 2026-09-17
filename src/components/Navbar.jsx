@@ -71,7 +71,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <img src={RIFT_LOGO} className="md:hidden w-10 h-10 rounded-full object-cover" alt="Rift" />
             <a
-              href="https://dash.rift.baby"
+              href="https://fenruko.github.io/dashboard"
               className="hidden md:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#0e0e0e] hover:bg-white/10 border border-white/20 text-white text-[13px] font-medium transition-colors duration-150"
             >
               Dashboard
@@ -119,7 +119,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="https://dash.rift.baby"
+                href="https://fenruko.github.io/dashboard"
                 onClick={() => setIsOpen(false)}
                 className="block px-3 py-2 rounded-lg text-sm text-white/50 hover:text-white hover:bg-white/[0.05]"
               >

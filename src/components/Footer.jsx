@@ -34,10 +34,11 @@ export default function Footer() {
             <div className="flex flex-col space-y-2 text-[13px] text-white/40">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <Link to="/commands" className="hover:text-white transition-colors">Commands</Link>
+              <a href="https://docs.rift.cool" className="hover:text-white transition-colors">Docs</a>
               <Link to="/team" className="hover:text-white transition-colors">Team</Link>
-              <a href="https://fenruko.github.io/dashboard" className="hover:text-white transition-colors">Dashboard</a>
+              <a href="https://dash.rift.cool" className="hover:text-white transition-colors">Dashboard</a>
               <a href="/bug-report.html" className="hover:text-white transition-colors">Report a Bug</a>
-              <a href="https://fenruko.github.io/staff" className="hover:text-white transition-colors">Ban Appeals</a>
+              <a href="https://staff.rift.cool" className="hover:text-white transition-colors">Ban Appeals</a>
             </div>
                     </div>
 

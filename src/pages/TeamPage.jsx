@@ -13,28 +13,16 @@ const TEAM = [
     bio: "fenruko is the founder of Rift and the lead developer behind the project.",
   },
   {
-    name: "yoru.me.uk/yoru.bun",
-    discordId: "1512032332163448880",
+    name: ".rdns",
+    discordId: "1538964751902838835",
     role: "CEO",
-    bio: "yoru.me.uk is the CEO of Rift, overseeing staff and operations of the bot globally.",
+    bio: ".rdns is the CEO of Rift, overseeing staff and operations of the bot globally.",
   },
   {
     name: "sreeharip.s_",
     discordId: "1398695684869459989",
     role: "COO",
     bio: "sreeharip.s_ is the COO of Rift, second in command to the CEO and oversees daily operations .",
-  },
-  {
-    name: "reddevss",
-    discordId: "1295530404727492709",
-    role: "CDO/CSO",
-    bio: "reddevss is the CDO and CSO of Rift, managing general security and bussiness strategies, Basically the guardian of the bot.",
-  },
-  {
-    name: "dndboner",
-    discordId: "164761668256137216",
-    role: "Chief Social Officer",
-    bio: "dndboner is the CSO of Rift, managing social media posts and reach strategies, along with server partnerships to increase reach.",
   },
 ];
 

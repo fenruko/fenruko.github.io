@@ -11,7 +11,6 @@ const BOT_INVITE_URL =
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/commands", label: "Commands" },
-  { href: "https://docs.rift.baby", label: "Docs" },
   { href: "/team", label: "Team" },
 ];
 

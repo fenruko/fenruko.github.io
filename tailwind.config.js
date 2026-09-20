@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         sans: ["Satoshi", "system-ui", "-apple-system", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        marker: ["Permanent Marker", "cursive"],
       },
       animation: {
         "drift-slow": "drift 26s ease-in-out infinite alternate",

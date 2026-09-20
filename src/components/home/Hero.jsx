@@ -3,6 +3,7 @@ import { FaDiscord } from "react-icons/fa6";
 import { Terminal } from "lucide-react";
 import Button from "../ui/Button";
 
+const RIFT_LOGO = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png";
 const BOT_INVITE_URL =
   "https://discord.com/oauth2/authorize?client_id=1329184069426348052&scope=bot+applications.commands";
 
@@ -18,28 +19,32 @@ export default function Hero() {
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
         transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-sm"
+        className="relative mb-6"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-[#5865f2] shadow-[0_0_8px_2px_rgba(88,101,242,0.5)]" />
-        <span className="cmd text-[11px] tracking-wide text-white/60">discord bot · slash commands · dashboard</span>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 scale-150 rounded-full bg-[#5865f2]/25 blur-3xl"
+        />
+        <img
+          src={RIFT_LOGO}
+          alt="Rift logo"
+          className="h-28 w-28 rounded-full object-cover ring-2 ring-white/15 md:h-36 md:w-36"
+        />
       </motion.div>
 
       <motion.h1
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-6 text-4xl font-bold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl"
+        transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-8 font-marker text-6xl tracking-wide text-white md:text-8xl"
       >
-        <span className="block text-white">75+ modules.</span>
-        <span className="block bg-gradient-to-r from-[#8b96ff] via-[#00b8ff] to-[#8b96ff] bg-clip-text text-transparent">
-          One bot.
-        </span>
+        RIFT
       </motion.h1>
 
       <motion.p
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="mb-10 max-w-2xl px-2 leading-relaxed text-white/45"
         style={{ fontSize: "clamp(15px, 3vw, 18px)" }}
       >
@@ -50,7 +55,7 @@ export default function Hero() {
       <motion.div
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="flex w-full flex-col items-center gap-3 px-6 sm:w-auto sm:flex-row sm:px-0"
       >
         <Button href={BOT_INVITE_URL} external size="lg" className="w-full sm:w-auto">

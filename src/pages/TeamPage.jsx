@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import ScrollReveal from "../components/ScrollReveal";
 
@@ -8,21 +8,21 @@ const FALLBACK_AVATAR = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png"
 const TEAM = [
   {
     name: "fenruko",
-    discordId: "834869554798395392", // TODO: replace with fenruko's real Discord user ID
+    discordId: "834869554798395392",
     role: "Founder",
-    bio: "fenruko is the founder of Rift and the lead developer behind the project.",
+    bio: "Founder of Rift and the lead developer behind the project.",
   },
   {
     name: ".rdns",
     discordId: "1538964751902838835",
     role: "CEO",
-    bio: ".rdns is the CEO of Rift, overseeing staff and operations of the bot globally.",
+    bio: "Oversees staff and operations of the bot globally.",
   },
   {
     name: "sreeharip.s_",
     discordId: "1398695684869459989",
     role: "COO",
-    bio: "sreeharip.s_ is the COO of Rift, second in command to the CEO and oversees daily operations .",
+    bio: "Second in command to the CEO; oversees daily operations.",
   },
 ];
 
@@ -60,36 +60,30 @@ function TeamMemberCard({ name, discordId, role, bio, delay }) {
   return (
     <ScrollReveal
       delay={delay}
-      className="inline-block bg-white/[0.02] rounded-2xl border border-white/[0.06] p-8 text-left max-w-sm"
+      className="inline-block max-w-sm rounded-2xl border border-white/[0.07] bg-white/[0.02] p-8 text-left backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.16]"
     >
-      <div className="flex items-center gap-4 mb-4">
-        <img
-          src={avatar}
-          alt={name}
-          className="w-14 h-14 rounded-full object-cover"
-        />
+      <div className="mb-4 flex items-center gap-4">
+        <img src={avatar} alt={name} className="h-14 w-14 rounded-full object-cover ring-1 ring-white/15" />
         <div>
-          <div className="text-white font-semibold text-lg">{name}</div>
-          <div className="text-white/40 text-sm">{role}</div>
+          <div className="text-lg font-semibold text-white">{name}</div>
+          <div className="cmd text-[12px] text-white/40">{role}</div>
         </div>
       </div>
-      <p className="text-white/40 text-[14px] leading-relaxed">{bio}</p>
+      <p className="text-[14px] leading-relaxed text-white/40">{bio}</p>
     </ScrollReveal>
   );
 }
 
 export default function TeamPage() {
   return (
-    <div className="min-h-screen bg-[#08090c] pt-32 pb-24 px-4">
+    <div className="min-h-screen px-4 pb-24 pt-32">
       <Helmet>
         <title>Team - Rift</title>
       </Helmet>
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="mx-auto max-w-3xl text-center">
         <ScrollReveal>
-          <h1 className="text-4xl md:text-5xl font-semibold text-white mb-4">The Team</h1>
-          <p className="text-white/40 text-[15px] max-w-xl mx-auto leading-relaxed mb-14">
-            The people behind Rift.
-          </p>
+          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">The Team</h1>
+          <p className="mx-auto mb-14 max-w-xl text-[15px] leading-relaxed text-white/40">The people behind Rift.</p>
         </ScrollReveal>
 
         <div className="flex flex-wrap justify-center gap-6">

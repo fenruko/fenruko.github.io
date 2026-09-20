@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { ArrowUp } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Background from "./components/Background";
 
 // Wraps React.lazy so that a failed dynamic import (e.g. a stale chunk
 // hash from before the latest deploy) triggers a single automatic
@@ -39,10 +40,7 @@ const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 500);
-    };
-
+    const toggleVisibility = () => setIsVisible(window.scrollY > 500);
     window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
@@ -50,17 +48,12 @@ const ScrollToTopButton = () => {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-6 right-6 z-40 group ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
-      } transition-all duration-500 ease-out`}
       aria-label="Scroll to top"
+      className={`fixed bottom-6 right-6 z-40 rounded-full border border-white/10 bg-[#0a0c12]/80 p-3.5 backdrop-blur-xl transition-all duration-500 ease-out hover:border-[#5865f2]/50 hover:bg-[#5865f2]/20 active:scale-95 ${
+        isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-16 opacity-0"
+      }`}
     >
-      <div className="relative">
-        <div className="absolute inset-0 bg-blue-600/30 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity" />
-        <div className="relative bg-[#0d0d0d]/90 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
-          <ArrowUp className="w-6 h-6 text-blue-400 group-hover:-translate-y-1 transition-transform duration-300" />
-        </div>
-      </div>
+      <ArrowUp className="h-5 w-5 text-white/70 transition-transform duration-300 group-hover:-translate-y-0.5" />
     </button>
   );
 };
@@ -72,7 +65,7 @@ const PageTransition = ({ children }) => {
     if (!location.hash) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -87,7 +80,8 @@ const PageTransition = ({ children }) => {
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-[#0d0d0d] relative">
+    <div className="relative min-h-screen">
+      <Background />
       <Navbar />
 
       <main className="relative">

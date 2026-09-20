@@ -27,6 +27,8 @@ export default [
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      // The project does not use prop-types; props are reviewed by hand.
+      'react/prop-types': 'off',
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [

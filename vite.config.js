@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/', // Ensure absolute root base for custom domain setup
+  // The site is previewed through proxied hosts (and served from a custom
+  // domain), so the dev/preview host allowlist must not block them.
+  server: { allowedHosts: true },
+  preview: { allowedHosts: true },
 })

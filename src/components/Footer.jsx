@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaDiscord } from "react-icons/fa6";
 import Button from "./ui/Button";
 
-const RIFT_LOGO = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png";
+const RIFT_LOGO = "/assets/riftlogo.jpg";
 const SUPPORT_SERVER_URL = "https://discord.gg/kqTPMyeteG";
 
 export default function Footer() {

@@ -4,7 +4,7 @@ import { FaDiscord } from "react-icons/fa6";
 import { Menu, X } from "lucide-react";
 import Button from "./ui/Button";
 
-const RIFT_LOGO = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png";
+const RIFT_LOGO = "/assets/riftlogo.jpg";
 const BOT_INVITE_URL =
   "https://discord.com/oauth2/authorize?client_id=1329184069426348052&scope=bot+applications.commands";
 

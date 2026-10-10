@@ -15,7 +15,7 @@ const blurFadeIn = {
 
 const ease = [0.22, 1, 0.36, 1];
 
-const READOUT = ["75+ modules", "slash commands only", "free on every server"];
+const READOUT = ["75+ modules", "slash commands supported btw", "free everywhere"];
 
 // "RIFT", cut along a diagonal. The halves drift apart once the page has
 // settled, and drift further when you hover the word.

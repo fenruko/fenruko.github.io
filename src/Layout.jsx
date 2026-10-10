@@ -4,6 +4,7 @@ import { ArrowUp } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Background from "./components/Background";
+import Splash from "./components/Splash";
 
 // Wraps React.lazy so that a failed dynamic import (e.g. a stale chunk
 // hash from before the latest deploy) triggers a single automatic
@@ -49,7 +50,7 @@ const ScrollToTopButton = () => {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Scroll to top"
-      className={`fixed bottom-6 right-6 z-40 rounded-full border border-white/10 bg-[#0a0c12]/80 p-3.5 backdrop-blur-xl transition-all duration-500 ease-out hover:border-[#5865f2]/50 hover:bg-[#5865f2]/20 active:scale-95 ${
+      className={`fixed bottom-6 right-6 z-40 rounded-full border border-white/10 bg-[#0a0c12]/80 p-3.5 backdrop-blur-xl transition-all duration-500 ease-out hover:border-[#7aa2f7]/50 hover:bg-[#7aa2f7]/15 active:scale-95 ${
         isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-16 opacity-0"
       }`}
     >
@@ -81,6 +82,7 @@ const PageTransition = ({ children }) => {
 const Layout = () => {
   return (
     <div className="relative min-h-screen">
+      <Splash />
       <Background />
       <Navbar />
 

@@ -4,9 +4,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Satoshi", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["DM Sans", "system-ui", "-apple-system", "sans-serif"],
+        heading: ["Chillax", "DM Sans", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         marker: ["Permanent Marker", "cursive"],
+      },
+      colors: {
+        rift: {
+          DEFAULT: "#5b7fd6",
+          deep: "#1f3e66",
+          bright: "#7aa2f7",
+        },
       },
       animation: {
         "drift-slow": "drift 26s ease-in-out infinite alternate",

@@ -33,14 +33,16 @@ function Screenshot({ img, alt }) {
     <div className="group relative">
       <div
         aria-hidden="true"
-        className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-br from-[#5865f2]/25 via-transparent to-[#00b8ff]/20 opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100"
+        className="absolute -inset-2 -z-10 bg-gradient-to-br from-[#8a7dff]/25 via-transparent to-[#35e0ff]/20 opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
       />
-      <img
-        src={img}
-        alt={alt}
-        loading="lazy"
-        className="w-full rounded-xl border border-white/10 bg-[#0b0d13] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.9)]"
-      />
+      <div className="oct oct-hover p-2 [--c:26px]">
+        <img
+          src={img}
+          alt={alt}
+          loading="lazy"
+          className="oct-img w-full bg-[#0b0d13]"
+        />
+      </div>
     </div>
   );
 }
@@ -51,8 +53,8 @@ export default function Showcase() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mb-16 md:mb-24">
           <div className="mb-4 flex items-center gap-3">
-            <span className="h-px w-8 bg-white/25" />
-            <span className="cmd text-xs tracking-[0.2em] text-white/40">in action</span>
+            <span className="h-px w-8" style={{ background: "var(--seam)" }} />
+            <span className="cmd text-xs tracking-[0.2em] text-white/40">{"// in action"}</span>
           </div>
           <h2 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
             Screenshots from a live server.
@@ -67,11 +69,11 @@ export default function Showcase() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.15} className={i % 2 === 1 ? "md:order-1" : ""}>
-                <span className="cmd inline-block rounded-md border border-[#5865f2]/30 bg-[#5865f2]/10 px-2.5 py-1 text-[12px] text-[#9aa4ff]">
-                  {row.cmd}
+                <span className="cmd oct inline-block px-3 py-1 text-[12px] text-[#35e0ff] [--c:7px] [--fill:#080a10]">
+                  <span className="mr-1.5 text-white/30">$</span>{row.cmd}
                 </span>
                 <h3 className="mb-4 mt-4 text-2xl font-semibold text-white sm:text-3xl">{row.title}</h3>
-                <p className="max-w-md leading-relaxed text-white/50">{row.body}</p>
+                <p className="max-w-md leading-relaxed text-white/55">{row.body}</p>
               </ScrollReveal>
             </div>
           ))}

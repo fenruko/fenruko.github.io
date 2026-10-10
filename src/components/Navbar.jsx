@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/team", label: "Team" },
 ];
 
+// Slim full-width bar. The active tab gets a seam of light underneath.
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +23,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,47 +32,57 @@ export default function Navbar() {
     setIsOpen(false);
   }, [location.pathname]);
 
+  const Tab = ({ link }) => {
+    const active = !link.href.startsWith("http") && location.pathname === link.href;
+    const cls = `relative px-4 py-5 text-[13.5px] tracking-wide transition-colors duration-200 ${
+      active ? "text-white" : "text-white/50 hover:text-white"
+    }`;
+    const seam = (
+      <span
+        aria-hidden="true"
+        className={`absolute inset-x-3 bottom-3 h-px origin-left transition-transform duration-500 ease-[cubic-bezier(0.22,0.8,0.32,1)] ${
+          active ? "scale-x-100" : "scale-x-0"
+        }`}
+        style={{ background: "var(--seam)", boxShadow: "0 0 10px rgba(138,125,255,0.8)" }}
+      />
+    );
+    return link.href.startsWith("http") ? (
+      <a href={link.href} className={cls}>
+        {link.label}
+        {seam}
+      </a>
+    ) : (
+      <Link to={link.href} className={cls}>
+        {link.label}
+        {seam}
+      </Link>
+    );
+  };
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isScrolled ? "px-3 pt-3 sm:px-4 sm:pt-4" : "px-0 pt-0"
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
+          isScrolled ? "border-b border-white/[0.07] bg-[#06070b]/75 backdrop-blur-xl" : "border-b border-transparent"
         }`}
       >
-        <div
-          className={`mx-auto flex max-w-7xl items-center justify-between px-6 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isScrolled
-              ? "h-14 rounded-2xl border border-white/10 bg-[#0a0c12]/80 backdrop-blur-xl"
-              : "h-[60px] rounded-none border border-transparent bg-transparent"
-          }`}
-        >
-          <div className="hidden items-center gap-7 md:flex">
-            <Link to="/" aria-label="Rift home" className="transition-transform duration-200 hover:scale-105">
-              <img src={RIFT_LOGO} className="h-9 w-9 rounded-full object-cover ring-1 ring-white/15" alt="Rift" />
-            </Link>
-            {NAV_LINKS.map((link) =>
-              link.href.startsWith("http") ? (
-                <a key={link.label} href={link.href} className="text-sm text-white/50 transition-colors hover:text-white">
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  className={`text-sm transition-colors ${
-                    location.pathname === link.href ? "text-white" : "text-white/50 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <Link to="/" aria-label="Rift home" className="group flex items-center gap-2.5">
+            <img
+              src={RIFT_LOGO}
+              className="logo-oct h-9 w-9 object-cover transition-transform duration-500 group-hover:rotate-[22deg]"
+              alt="Rift"
+            />
+            <span className="font-heading text-lg font-semibold lowercase tracking-tight text-white">rift</span>
+          </Link>
+
+          <div className="hidden items-center md:flex">
+            {NAV_LINKS.map((link) => (
+              <Tab key={link.label} link={link} />
+            ))}
           </div>
 
           <div className="flex items-center gap-2.5">
-            <Link to="/" className="md:hidden" aria-label="Rift home">
-              <img src={RIFT_LOGO} className="h-9 w-9 rounded-full object-cover ring-1 ring-white/15" alt="Rift" />
-            </Link>
             <Button href="https://dash.rift.cool" external variant="secondary" size="sm" className="hidden md:inline-flex">
               Dashboard
             </Button>
@@ -90,9 +102,9 @@ export default function Navbar() {
       </nav>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex flex-col bg-[#0a0c12]/95 backdrop-blur-xl md:hidden">
-          <div className="flex h-[60px] items-center justify-between border-b border-white/[0.06] px-6">
-            <img src={RIFT_LOGO} className="h-9 w-9 rounded-full object-cover" alt="Rift" />
+        <div className="fixed inset-0 z-[100] flex flex-col bg-[#06070b]/95 backdrop-blur-2xl md:hidden">
+          <div className="flex h-16 items-center justify-between border-b border-white/[0.06] px-6">
+            <img src={RIFT_LOGO} className="logo-oct h-9 w-9 object-cover" alt="Rift" />
             <button onClick={() => setIsOpen(false)} className="p-2 text-white/50 transition-colors hover:text-white" aria-label="Close menu">
               <X className="h-5 w-5" />
             </button>
@@ -100,23 +112,17 @@ export default function Navbar() {
 
           <div className="flex-1 overflow-y-auto px-4 py-4">
             <div className="space-y-1 pt-3">
-              {NAV_LINKS.map((link) => (
+              {[...NAV_LINKS, { href: "https://dash.rift.cool", label: "Dashboard" }].map((link, i) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-sm text-white/60 transition-colors hover:bg-white/[0.05] hover:text-white"
+                  className="flex items-center gap-3 border-b border-white/[0.05] px-2 py-4 font-heading text-xl text-white/70 transition-colors hover:text-white"
                 >
+                  <span className="cmd text-[11px] text-[#8a7dff]">{String(i + 1).padStart(2, "0")}</span>
                   {link.label}
                 </a>
               ))}
-              <a
-                href="https://dash.rift.cool"
-                onClick={() => setIsOpen(false)}
-                className="block rounded-lg px-3 py-2 text-sm text-white/60 transition-colors hover:bg-white/[0.05] hover:text-white"
-              >
-                Dashboard
-              </a>
             </div>
           </div>
 

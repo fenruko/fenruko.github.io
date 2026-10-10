@@ -5,8 +5,16 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Satoshi", "system-ui", "-apple-system", "sans-serif"],
+        heading: ["Clash Display", "Satoshi", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         marker: ["Permanent Marker", "cursive"],
+      },
+      colors: {
+        rift: {
+          violet: "#8a7dff",
+          cyan: "#35e0ff",
+          ink: "#06070b",
+        },
       },
       animation: {
         "drift-slow": "drift 26s ease-in-out infinite alternate",

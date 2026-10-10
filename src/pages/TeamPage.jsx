@@ -12,18 +12,6 @@ const TEAM = [
     role: "Founder",
     bio: "Founder of Rift and the lead developer behind the project.",
   },
-  {
-    name: ".rdns",
-    discordId: "1538964751902838835",
-    role: "CEO",
-    bio: "Oversees staff and operations of the bot globally.",
-  },
-  {
-    name: "sreeharip.s_",
-    discordId: "1398695684869459989",
-    role: "COO",
-    bio: "Second in command to the CEO; oversees daily operations.",
-  },
 ];
 
 function useLanyardAvatar(discordId) {

@@ -19,7 +19,7 @@ const COMMAND_ROWS = [
 
 function CommandPill({ children }) {
   return (
-    <span className="cmd whitespace-nowrap glass rounded-full px-4 py-1.5 text-[13px] text-white/55">
+    <span className="cmd whitespace-nowrap oct px-4 py-1.5 text-[13px] text-white/55 [--c:8px] [--fill:#080a10]">
       {children}
     </span>
   );
@@ -51,7 +51,7 @@ export default function CommandMarquee() {
   return (
     <div
       aria-hidden="true"
-      className="relative border-y border-white/[0.05] py-4 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
+      className="relative border-y border-white/[0.05] bg-white/[0.012] py-4 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
     >
       {COMMAND_ROWS.map((row, i) => (
         <MarqueeRow key={i} {...row} />

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 const RIFT_LOGO = "/assets/riftlogo.jpg";
 
-// Short branded splash on first load. Releases the body scroll lock
-// (body:not(.loaded) in index.css) and zooms the logo out when done.
+// Branded splash on first load: the logo fades in fast, then zooms through
+// the viewer. Releases the body scroll lock (body:not(.loaded) in index.css).
 export default function Splash() {
   const [hide, setHide] = useState(false);
   const [gone, setGone] = useState(false);
@@ -13,8 +13,8 @@ export default function Splash() {
     const t1 = setTimeout(() => {
       setHide(true);
       document.body.classList.add("loaded");
-    }, reduce ? 50 : 900);
-    const t2 = setTimeout(() => setGone(true), reduce ? 100 : 1800);
+    }, reduce ? 50 : 950);
+    const t2 = setTimeout(() => setGone(true), reduce ? 100 : 2000);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -26,7 +26,7 @@ export default function Splash() {
 
   return (
     <div className={`splash${hide ? " hide" : ""}`} aria-hidden="true">
-      <img className="splash-logo" src={RIFT_LOGO} alt="" />
+      <img className="splash-logo logo-oct" src={RIFT_LOGO} alt="" />
     </div>
   );
 }

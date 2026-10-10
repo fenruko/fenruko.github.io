@@ -7,13 +7,16 @@ const SUPPORT_SERVER_URL = "https://discord.gg/kqTPMyeteG";
 
 export default function Footer() {
   return (
-    <footer className="relative px-4 pb-10 pt-6 sm:px-6">
-      <div className="glass mx-auto max-w-[1180px] rounded-[28px] px-6 pb-7 pt-10 sm:px-10">
-        <div className="mb-10 grid grid-cols-1 gap-10 md:grid-cols-[1.6fr,1fr,1fr]">
+    <footer className="relative mt-10 px-4 pb-10 sm:px-6">
+      {/* the seam, once more */}
+      <div aria-hidden="true" className="mx-auto mb-12 h-px max-w-6xl" style={{ background: "var(--seam)", boxShadow: "0 0 14px rgba(138,125,255,0.55)" }} />
+
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-[1.6fr,1fr,1fr]">
           <div>
-            <Link to="/" className="mb-4 inline-flex items-center gap-3">
-              <img src={RIFT_LOGO} alt="Rift" className="h-9 w-9 rounded-xl object-cover ring-1 ring-white/15" />
-              <span className="font-heading text-lg font-semibold text-white">Rift</span>
+            <Link to="/" className="mb-4 inline-flex items-center gap-2.5">
+              <img src={RIFT_LOGO} alt="Rift" className="logo-oct h-9 w-9 object-cover" />
+              <span className="font-heading text-lg font-semibold lowercase text-white">rift</span>
             </Link>
             <p className="max-w-[320px] text-[13.5px] leading-relaxed text-white/45">
               A Discord bot with 75+ modules. Configured from the dashboard, driven by slash commands.
@@ -21,7 +24,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="cmd mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7aa2f7]/60">Site</h5>
+            <h5 className="cmd mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8a7dff]">{"// site"}</h5>
             <div className="flex flex-col space-y-2 text-[13.5px] text-white/50">
               <Link to="/" className="transition-colors hover:text-white">Home</Link>
               <Link to="/commands" className="transition-colors hover:text-white">Commands</Link>
@@ -34,7 +37,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="cmd mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7aa2f7]/60">Support</h5>
+            <h5 className="cmd mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#35e0ff]">{"// support"}</h5>
             <p className="text-[13.5px] leading-relaxed text-white/45">
               Help, feedback, and updates live in the community server.
             </p>
@@ -45,8 +48,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.07] pt-6 text-[12px] text-white/35">
-          &copy; {new Date().getFullYear()} Rift.
+        <div className="cmd flex items-center justify-between border-t border-white/[0.06] pt-6 text-[11.5px] text-white/30">
+          <span>&copy; {new Date().getFullYear()} Rift.</span>
+          <span className="hidden sm:inline">rift://home</span>
         </div>
       </div>
     </footer>

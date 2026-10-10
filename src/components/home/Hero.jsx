@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaDiscord } from "react-icons/fa6";
 import { Terminal } from "lucide-react";
@@ -14,11 +15,45 @@ const blurFadeIn = {
 
 const ease = [0.22, 1, 0.36, 1];
 
-const STATS = [
-  { value: "75+", label: "modules" },
-  { value: "Slash", label: "commands only" },
-  { value: "Free", label: "on every server" },
-];
+const READOUT = ["75+ modules", "slash commands only", "free on every server"];
+
+// "RIFT", cut along a diagonal. The halves drift apart once the page has
+// settled, and drift further when you hover the word.
+function Wordmark() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setOpen(true), 700);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <h1 className={`rift-word${open ? " open" : ""}`} aria-label="Rift">
+      <span className="rw-base" aria-hidden="true">RIFT</span>
+      <span className="rw-top" aria-hidden="true">RIFT</span>
+      <span className="rw-bot" aria-hidden="true">RIFT</span>
+      <svg className="rw-seam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="seamGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#8a7dff" stopOpacity="0" />
+            <stop offset="0.3" stopColor="#8a7dff" />
+            <stop offset="0.7" stopColor="#35e0ff" />
+            <stop offset="1" stopColor="#35e0ff" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <line
+          x1="-5"
+          y1="58"
+          x2="105"
+          y2="40"
+          stroke="url(#seamGrad)"
+          strokeWidth="1.6"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+    </h1>
+  );
+}
 
 export default function Hero() {
   return (
@@ -27,43 +62,29 @@ export default function Hero() {
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
         transition={{ duration: 0.8, delay: 0.1, ease }}
-        className="glass mb-8 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5"
+        className="relative mb-4"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-[#9ece6a] shadow-[0_0_10px_#9ece6a]" />
-        <span className="cmd text-[11px] tracking-[0.14em] text-white/60">DISCORD BOT</span>
+        <div aria-hidden="true" className="absolute inset-0 -z-10 scale-[1.9] rounded-full bg-[#8a7dff]/25 blur-3xl" />
+        <img
+          src={RIFT_LOGO}
+          alt="Rift logo"
+          className="logo-oct h-20 w-20 object-cover md:h-24 md:w-24"
+        />
       </motion.div>
 
       <motion.div
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.2, ease }}
-        className="relative mb-7"
+        transition={{ duration: 0.9, delay: 0.25, ease }}
+        className="mb-8"
       >
-        <div aria-hidden="true" className="absolute inset-0 -z-10 scale-150 rounded-full bg-[#7aa2f7]/20 blur-3xl" />
-        <img
-          src={RIFT_LOGO}
-          alt="Rift logo"
-          className="h-24 w-24 rounded-[28px] object-cover ring-1 ring-white/20 md:h-28 md:w-28"
-        />
+        <Wordmark />
       </motion.div>
-
-      <motion.h1
-        initial={blurFadeIn.initial}
-        animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.3, ease }}
-        className="mb-6 max-w-3xl text-5xl font-semibold leading-[1.05] text-white md:text-7xl"
-      >
-        Rift,{" "}
-        <span className="bg-gradient-to-b from-white to-[#7aa2f7]/70 bg-clip-text text-transparent">
-          the all-in-one
-        </span>{" "}
-        Discord bot.
-      </motion.h1>
 
       <motion.p
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.42, ease }}
+        transition={{ duration: 0.8, delay: 0.45, ease }}
         className="mb-10 max-w-2xl px-2 leading-relaxed text-white/50"
         style={{ fontSize: "clamp(15px, 3vw, 18px)" }}
       >
@@ -74,7 +95,7 @@ export default function Hero() {
       <motion.div
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.55, ease }}
+        transition={{ duration: 0.8, delay: 0.58, ease }}
         className="flex w-full flex-col items-center gap-3 px-6 sm:w-auto sm:flex-row sm:px-0"
       >
         <Button href={BOT_INVITE_URL} external size="lg" className="w-full sm:w-auto">
@@ -87,19 +108,19 @@ export default function Hero() {
         </Button>
       </motion.div>
 
-      <motion.div
+      <motion.ul
         initial={blurFadeIn.initial}
         animate={blurFadeIn.animate}
-        transition={{ duration: 0.8, delay: 0.7, ease }}
-        className="glass mt-16 grid w-full max-w-2xl grid-cols-3 divide-x divide-white/[0.07] rounded-2xl"
+        transition={{ duration: 0.8, delay: 0.75, ease }}
+        className="cmd mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-white/40"
       >
-        {STATS.map((s) => (
-          <div key={s.label} className="px-3 py-5">
-            <div className="font-heading text-2xl font-semibold text-white md:text-3xl">{s.value}</div>
-            <div className="cmd mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/35">{s.label}</div>
-          </div>
+        {READOUT.map((item) => (
+          <li key={item} className="flex items-center gap-2">
+            <span className="text-[#35e0ff]">&gt;</span>
+            {item}
+          </li>
         ))}
-      </motion.div>
+      </motion.ul>
     </section>
   );
 }

@@ -55,12 +55,12 @@ export default function CommandsPage() {
             <ScrollReveal
               key={cat.title}
               delay={i * 0.05}
-              className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.16]"
+              className="oct oct-hover p-6 [--c:22px]"
             >
               <h2 className="mb-4 text-lg font-semibold text-white">{cat.title}</h2>
               <div className="flex flex-wrap gap-2">
                 {cat.items.map((item) => (
-                  <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[13px] text-white/45">
+                  <span key={item} className="oct inline-block px-3 py-1 text-[13px] text-white/50 [--c:7px] [--fill:#080a10]">
                     {item}
                   </span>
                 ))}

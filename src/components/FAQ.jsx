@@ -42,18 +42,18 @@ export default function FAQ() {
           <h2 className="text-3xl font-semibold leading-snug text-white md:text-4xl">Questions.</h2>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1} className="glass space-y-0 overflow-hidden rounded-3xl">
+        <ScrollReveal delay={0.1} className="oct space-y-0 [--c:26px]">
           {FAQ_ITEMS.map((item, i) => (
             <div key={i} className={i > 0 ? "border-t border-white/[0.06]" : ""}>
               <button
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
                 className="group flex w-full items-center gap-4 px-6 py-[18px] text-left transition-colors hover:bg-white/[0.025]"
               >
-                <span className="cmd w-5 flex-shrink-0 text-[12px] text-[#7aa2f7]/60">{String(i + 1).padStart(2, "0")}</span>
+                <span className="cmd w-5 flex-shrink-0 text-[12px] text-[#8a7dff]">{String(i + 1).padStart(2, "0")}</span>
                 <span className="flex-1 text-[14.5px] font-medium text-white/75 transition-colors group-hover:text-white/90">
                   {item.question}
                 </span>
-                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.04]">
+                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center border border-white/[0.1] bg-white/[0.03] [clip-path:polygon(30%_0,70%_0,100%_30%,100%_70%,70%_100%,30%_100%,0_70%,0_30%)]">
                   {openIndex === i ? <Minus className="h-3 w-3 text-white/40" /> : <Plus className="h-3 w-3 text-white/30" />}
                 </span>
               </button>

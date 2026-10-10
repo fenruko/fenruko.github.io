@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "system-ui", "-apple-system", "sans-serif"],
-        heading: ["Chillax", "DM Sans", "system-ui", "sans-serif"],
+        sans: ["Satoshi", "system-ui", "-apple-system", "sans-serif"],
+        heading: ["Clash Display", "Satoshi", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         marker: ["Permanent Marker", "cursive"],
       },
       colors: {
         rift: {
-          DEFAULT: "#5b7fd6",
-          deep: "#1f3e66",
-          bright: "#7aa2f7",
+          violet: "#8a7dff",
+          cyan: "#35e0ff",
+          ink: "#06070b",
         },
       },
       animation: {

@@ -33,14 +33,14 @@ function Screenshot({ img, alt }) {
     <div className="group relative">
       <div
         aria-hidden="true"
-        className="absolute -inset-1 -z-10 rounded-3xl bg-gradient-to-br from-[#7aa2f7]/25 via-transparent to-[#1f3e66]/40 opacity-0 blur-xl transition-opacity duration-700 group-hover:opacity-100"
+        className="absolute -inset-2 -z-10 bg-gradient-to-br from-[#8a7dff]/25 via-transparent to-[#35e0ff]/20 opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
       />
-      <div className="glass rounded-3xl p-2.5">
+      <div className="oct oct-hover p-2 [--c:26px]">
         <img
           src={img}
           alt={alt}
           loading="lazy"
-          className="w-full rounded-2xl border border-white/[0.06] bg-[#0b0d13]"
+          className="oct-img w-full bg-[#0b0d13]"
         />
       </div>
     </div>
@@ -53,8 +53,8 @@ export default function Showcase() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mb-16 md:mb-24">
           <div className="mb-4 flex items-center gap-3">
-            <span className="h-px w-8 bg-[#7aa2f7]/50" />
-            <span className="cmd text-xs tracking-[0.2em] text-white/40">in action</span>
+            <span className="h-px w-8" style={{ background: "var(--seam)" }} />
+            <span className="cmd text-xs tracking-[0.2em] text-white/40">{"// in action"}</span>
           </div>
           <h2 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
             Screenshots from a live server.
@@ -69,8 +69,8 @@ export default function Showcase() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.15} className={i % 2 === 1 ? "md:order-1" : ""}>
-                <span className="cmd glass inline-block rounded-full px-3 py-1 text-[12px] text-[#7aa2f7]">
-                  {row.cmd}
+                <span className="cmd oct inline-block px-3 py-1 text-[12px] text-[#35e0ff] [--c:7px] [--fill:#080a10]">
+                  <span className="mr-1.5 text-white/30">$</span>{row.cmd}
                 </span>
                 <h3 className="mb-4 mt-4 text-2xl font-semibold text-white sm:text-3xl">{row.title}</h3>
                 <p className="max-w-md leading-relaxed text-white/55">{row.body}</p>

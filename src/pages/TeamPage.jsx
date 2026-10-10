@@ -60,10 +60,10 @@ function TeamMemberCard({ name, discordId, role, bio, delay }) {
   return (
     <ScrollReveal
       delay={delay}
-      className="inline-block max-w-sm rounded-2xl border border-white/[0.07] bg-white/[0.02] p-8 text-left backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.16]"
+      className="oct oct-hover inline-block max-w-sm p-8 text-left [--c:24px]"
     >
       <div className="mb-4 flex items-center gap-4">
-        <img src={avatar} alt={name} className="h-14 w-14 rounded-full object-cover ring-1 ring-white/15" />
+        <img src={avatar} alt={name} className="logo-oct h-14 w-14 object-cover" />
         <div>
           <div className="text-lg font-semibold text-white">{name}</div>
           <div className="cmd text-[12px] text-white/40">{role}</div>

@@ -1,13 +1,13 @@
 # Command screenshots
 
 Discord screenshots used on the home page. Vite copies this folder verbatim
-into the build, so `public/screenshots/fmnow.png` is served in production at
-`https://rift.cool/screenshots/fmnow.png`.
+into the build, so `public/screenshots/fmnow.webp` is served in production at
+`https://rift.cool/screenshots/fmnow.webp`.
 
 | File            | Command shown       | Section on home page        |
 | --------------- | ------------------- | --------------------------- |
-| `fmnow.png`     | `/fm now`           | last.fm                     |
-| `musicplay.png` | `/music play`       | music player                |
-| `gambling.png`  | `/game blackjack`   | casino                      |
+| `fmnow.webp`     | `/fm now`           | last.fm                     |
+| `musicplay.webp` | `/music play`       | music player                |
+| `gambling.webp`  | `/game blackjack`   | casino                      |
 
-To swap a shot, overwrite the file with the same name — no code changes needed.
+To swap a shot, overwrite the file with the same name and keep it WebP (small and fast) — no code changes needed.

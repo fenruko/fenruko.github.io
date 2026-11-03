@@ -1,5 +1,4 @@
-import { Helmet } from "react-helmet";
-import ScrollReveal from "../components/ScrollReveal";
+import useTitle from "../useTitle";
 
 const CATEGORIES = [
   {
@@ -37,38 +36,27 @@ const CATEGORIES = [
 ];
 
 export default function CommandsPage() {
-  return (
-    <div className="min-h-screen px-4 pb-24 pt-32">
-      <Helmet>
-        <title>Commands - Rift</title>
-      </Helmet>
-      <div className="relative mx-auto max-w-5xl">
-        <ScrollReveal className="mb-14 text-center">
-          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">Commands</h1>
-          <p className="mx-auto max-w-xl text-[15px] leading-relaxed text-white/40">
-            75+ modules, every one a slash command.
-          </p>
-        </ScrollReveal>
+  useTitle("Commands - Rift");
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {CATEGORIES.map((cat, i) => (
-            <ScrollReveal
-              key={cat.title}
-              delay={i * 0.05}
-              className="oct oct-hover p-6 [--c:22px]"
-            >
-              <h2 className="mb-4 text-lg font-semibold text-white">{cat.title}</h2>
-              <div className="flex flex-wrap gap-2">
+  return (
+    <section className="page">
+      <div className="wrap">
+        <h1 className="h1 h1-page">Commands</h1>
+        <p className="lead">75+ modules, every one a slash command.</p>
+
+        <div className="grid grid-2">
+          {CATEGORIES.map((cat) => (
+            <section key={cat.title} className="glass card">
+              <h2 className="h3">{cat.title}</h2>
+              <ul className="chips">
                 {cat.items.map((item) => (
-                  <span key={item} className="oct inline-block px-3 py-1 text-[13px] text-white/50 [--c:7px] [--fill:#080a10]">
-                    {item}
-                  </span>
+                  <li key={item} className="chip">{item}</li>
                 ))}
-              </div>
-            </ScrollReveal>
+              </ul>
+            </section>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

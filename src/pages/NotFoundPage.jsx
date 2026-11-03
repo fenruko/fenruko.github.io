@@ -1,15 +1,16 @@
-import { Helmet } from "react-helmet";
-import Button from "../components/ui/Button";
+import { Link } from "react-router-dom";
+import useTitle from "../useTitle";
 
 export default function NotFoundPage() {
+  useTitle("Page Not Found - Rift");
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-      <Helmet>
-        <title>Page Not Found - Rift</title>
-      </Helmet>
-      <p className="cmd mb-3 text-[12px] tracking-[0.2em] text-white/30">404</p>
-      <h1 className="mb-8 text-2xl font-semibold text-white">This page does not exist.</h1>
-      <Button to="/">Back to Home</Button>
-    </div>
+    <section className="page notfound">
+      <div className="wrap narrow">
+        <p className="eyebrow">404</p>
+        <h1 className="h2">This page does not exist.</h1>
+        <Link to="/" className="btn btn-primary">Back to home</Link>
+      </div>
+    </section>
   );
 }

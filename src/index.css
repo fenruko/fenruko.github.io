@@ -1,13 +1,12 @@
 /* ------------------------------------------------------------------
-   Rift design language, v2: frosted glass over a static violet/cyan
+   Rift design language, v2: frosted glass over a static, low-key cyan-tinted
    backdrop. No animated blur, no filters on large surfaces, no
    third-party fonts. backdrop-filter is used on the nav and on cards
    only, with a modest radius.
 ------------------------------------------------------------------- */
 :root {
   --bg: #07080d;
-  --violet: #8a7dff;
-  --cyan: #35e0ff;
+  --accent: #2cc5d9;
 
   --text-bright: rgba(255, 255, 255, 0.95);
   --text: rgba(255, 255, 255, 0.72);
@@ -52,10 +51,8 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60vw 45vh at 15% 0%, rgba(138, 125, 255, 0.28), transparent 70%),
-    radial-gradient(55vw 45vh at 90% 12%, rgba(53, 224, 255, 0.16), transparent 70%),
-    radial-gradient(70vw 55vh at 50% 105%, rgba(138, 125, 255, 0.22), transparent 70%),
-    radial-gradient(40vw 40vh at 100% 60%, rgba(53, 224, 255, 0.08), transparent 70%),
+    radial-gradient(60vw 45vh at 20% 0%, rgba(44, 197, 217, 0.1), transparent 70%),
+    radial-gradient(70vw 55vh at 50% 105%, rgba(44, 197, 217, 0.07), transparent 70%),
     var(--bg);
   pointer-events: none;
 }
@@ -89,12 +86,12 @@ code {
 }
 
 ::selection {
-  background: rgba(138, 125, 255, 0.45);
+  background: rgba(44, 197, 217, 0.35);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -135,11 +132,7 @@ main {
   line-height: 1;
   font-weight: 700;
   letter-spacing: -0.045em;
-  color: var(--text-bright);
-  background: linear-gradient(180deg, #fff 20%, #c9c4ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
 }
 
 .h1-page {
@@ -188,7 +181,7 @@ main {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--violet);
+  color: var(--accent);
 }
 
 .sub {
@@ -256,13 +249,12 @@ main {
 }
 
 .btn-primary {
-  color: #fff;
-  background: linear-gradient(135deg, #6d5cff, #8a7dff 50%, #3cc6ee);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 22px -8px rgba(138, 125, 255, 0.7);
+  color: #04161a;
+  background: var(--accent);
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 
 .btn-glass {
@@ -445,19 +437,6 @@ main {
   border-radius: 24px;
 }
 
-.hero-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(138, 125, 255, 0.6), transparent 40%, transparent 60%, rgba(53, 224, 255, 0.45));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  pointer-events: none;
-}
-
 .hero-card-head {
   display: flex;
   align-items: center;
@@ -488,7 +467,7 @@ main {
 
 .cmd-list code {
   font-size: 14px;
-  color: var(--cyan);
+  color: var(--accent);
 }
 
 .cmd-list span {
@@ -542,7 +521,7 @@ main {
 .pill {
   margin-bottom: 14px;
   font-size: 13px;
-  color: var(--cyan);
+  color: var(--accent);
 }
 
 /* ---------- screenshots ---------- */

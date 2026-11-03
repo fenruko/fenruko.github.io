@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import ScrollReveal from "../components/ScrollReveal";
-
-// Shown until the Lanyard fetch resolves, or if it fails
-const FALLBACK_AVATAR = "https://i.postimg.cc/qR4jqJdK/cropped_circle_image.png";
+import { useEffect, useState } from "react";
+import useTitle from "../useTitle";
+import { LOGO_LARGE } from "../links";
 
 const TEAM = [
   {
@@ -14,8 +11,9 @@ const TEAM = [
   },
 ];
 
+// Shown until the Lanyard fetch resolves, or if it fails.
 function useLanyardAvatar(discordId) {
-  const [avatarUrl, setAvatarUrl] = useState(FALLBACK_AVATAR);
+  const [avatarUrl, setAvatarUrl] = useState(LOGO_LARGE);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,7 +29,7 @@ function useLanyardAvatar(discordId) {
         }
       })
       .catch(() => {
-        // Lanyard down or user not in the Lanyard support server — keep fallback
+        // Lanyard down or user not in the Lanyard support server: keep the fallback.
       });
 
     return () => {
@@ -42,44 +40,37 @@ function useLanyardAvatar(discordId) {
   return avatarUrl;
 }
 
-function TeamMemberCard({ name, discordId, role, bio, delay }) {
+function TeamMemberCard({ name, discordId, role, bio }) {
   const avatar = useLanyardAvatar(discordId);
 
   return (
-    <ScrollReveal
-      delay={delay}
-      className="oct oct-hover inline-block max-w-sm p-8 text-left [--c:24px]"
-    >
-      <div className="mb-4 flex items-center gap-4">
-        <img src={avatar} alt={name} className="logo-oct h-14 w-14 object-cover" />
+    <article className="glass card member">
+      <div className="member-head">
+        <img src={avatar} width="56" height="56" alt="" className="logo" />
         <div>
-          <div className="text-lg font-semibold text-white">{name}</div>
-          <div className="cmd text-[12px] text-white/40">{role}</div>
+          <div className="member-name">{name}</div>
+          <div className="muted small">{role}</div>
         </div>
       </div>
-      <p className="text-[14px] leading-relaxed text-white/40">{bio}</p>
-    </ScrollReveal>
+      <p className="muted">{bio}</p>
+    </article>
   );
 }
 
 export default function TeamPage() {
-  return (
-    <div className="min-h-screen px-4 pb-24 pt-32">
-      <Helmet>
-        <title>Team - Rift</title>
-      </Helmet>
-      <div className="mx-auto max-w-3xl text-center">
-        <ScrollReveal>
-          <h1 className="mb-4 text-4xl font-semibold text-white md:text-5xl">The Team</h1>
-          <p className="mx-auto mb-14 max-w-xl text-[15px] leading-relaxed text-white/40">The people behind Rift.</p>
-        </ScrollReveal>
+  useTitle("Team - Rift");
 
-        <div className="flex flex-wrap justify-center gap-6">
-          {TEAM.map((member, i) => (
-            <TeamMemberCard key={member.name} {...member} delay={i * 0.1} />
+  return (
+    <section className="page">
+      <div className="wrap narrow">
+        <h1 className="h1 h1-page">The Team</h1>
+        <p className="lead">The people behind Rift.</p>
+        <div className="team">
+          {TEAM.map((member) => (
+            <TeamMemberCard key={member.name} {...member} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

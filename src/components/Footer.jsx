@@ -11,7 +11,7 @@ export default function Footer() {
             <span>rift</span>
           </Link>
           <p className="muted small footer-blurb">
-            A Discord bot with 75+ modules. Configured from the dashboard, driven by slash commands.
+            A Discord bot with 75+ modules completely free with no strings attached.
           </p>
         </div>
 

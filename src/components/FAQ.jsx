@@ -1,26 +1,26 @@
 const FAQ_ITEMS = [
   {
     question: "Is Rift free?",
-    answer: "Yes. Every module — moderation, music, tickets, leveling, casino — is free on every server.",
+    answer: "Yes. Every module: moderation, music, tickets, leveling, casino, etc. is free on every server.",
   },
   {
     question: "What permissions does it need?",
     answer:
-      "Only what each enabled feature requires: managing roles for moderation, connecting to voice for music, and so on. Unused features request nothing.",
+      "Permissions were selected to fit what the bot exactly needs, by default it doesn't have admin perms on, however it is recommended to enable admin perms after trusting the bot.",
   },
   {
     question: "Are all commands slash commands?",
-    answer: "Yes. The full command list works as slash commands inside Discord.",
+    answer: "around 90% or more of the bots commands are both slash and prefix, because of the big amount of the commands the bot has it is simply not possible to make every single command slash",
   },
   {
     question: "How do I add it to my server?",
     answer:
-      "Click Add to Discord, pick a server, accept the permissions. Defaults work out of the box; finer config lives in the dashboard.",
+      "Click Add to Discord, pick a server, accept the permissions. Defaults work out of the box.",
   },
   {
     question: "What happens to my server's data?",
     answer:
-      "Only what enabled features need is stored. Message content is not logged. Removing the bot wipes your server's data.",
+      "Only what enabled features need is stored. kicking the bot removes all data from our database ( we are not like Double Counter :D )",
   },
   {
     question: "Where do I get help?",

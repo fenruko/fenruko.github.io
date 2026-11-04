@@ -52,8 +52,7 @@ export default function HomePage() {
           <div>
             <h1 className="h1">Rift</h1>
             <p className="lead">
-              Moderation, music, economy, tickets, last.fm, and a casino. Everything runs as slash commands and is
-              configured from one dashboard.
+              Moderation, music, economy, tickets, last.fm, and a casino. Everything works cleanly with your stuff, no strings attached.
             </p>
             <div className="actions">
               <a href={BOT_INVITE_URL} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
@@ -66,7 +65,7 @@ export default function HomePage() {
             <ul className="stats">
               <li><strong>75+</strong> modules</li>
               <li><strong>100%</strong> slash commands</li>
-              <li><strong>Free</strong> on every server</li>
+              <li><strong>Free</strong> always (unless you want to support me ko-fi.com/fenruko)</li>
             </ul>
           </div>
 
@@ -109,7 +108,7 @@ export default function HomePage() {
       <section className="section deferred">
         <div className="wrap">
           <h2 className="h2">In action</h2>
-          <p className="muted sub">Screenshots from a live server.</p>
+          <p className="muted sub">Screenshots</p>
           <div className="shots">
             {SHOTS.map((s, i) => (
               <div key={s.cmd} className={`shot${i % 2 ? " flip" : ""}`}>

@@ -1,10 +1,4 @@
-/* ═══════════════════════════════════════════
-   RIFT DASHBOARD — SETTINGS & PLAYLISTS
-   Prefs persist server-side via /api/prefs
-   keyed to Discord user ID — syncs across devices
-═══════════════════════════════════════════ */
 
-/* ── State ───────────────────────────────── */
 let _prefs = {};
 let _prefsSaveTimeout = null;
 let _dynGradientId = null;
@@ -23,7 +17,7 @@ const DEFAULTS = {
     stars:          true,
 };
 
-/* ── Init ─────────────────────────────────── */
+
 window.initSettings = async function() {
     await loadPrefs();
     applyAllPrefs();
@@ -31,7 +25,7 @@ window.initSettings = async function() {
     loadPlaylists();
 };
 
-/* ── Load / Save prefs ───────────────────── */
+
 let _prefsLoaded = false;
 
 async function loadPrefs() {

@@ -7,6 +7,6 @@
  * discordClientId   OAuth2 application id used for "Log in with Discord".
  */
 window.RIFT_CONFIG = {
-  apiBase: "https://desktop-mo3r1pj.tailb9e0a9.ts.net/api",
+  apiBase: "https://api.rift.cool/api",
   discordClientId: "1329184069426348052",
 };

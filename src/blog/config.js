@@ -1,7 +1,7 @@
 // Runtime settings come from /config.js (window.RIFT_CONFIG) so the API host can
 // change without a rebuild. These defaults match the dashboard's.
 const DEFAULTS = {
-  apiBase: "https://desktop-mo3r1pj.tailb9e0a9.ts.net/api",
+  apiBase: "https://api.rift.cool/api",
   discordClientId: "1329184069426348052",
 };
 

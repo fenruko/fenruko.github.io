@@ -30,6 +30,7 @@ export default function Navbar() {
         <div id="nav-links" className={`nav-links${open ? " open" : ""}`}>
           <NavLink to="/" end>Home</NavLink>
           <NavLink to="/commands">Commands</NavLink>
+          <NavLink to="/blog">Blog</NavLink>
           <a href={DOCS_URL}>Docs</a>
           <NavLink to="/team">Team</NavLink>
           <a href={DASHBOARD_URL}>Dashboard</a>

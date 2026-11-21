@@ -4,13 +4,22 @@ import { BOT_INVITE_URL, DASHBOARD_URL, DOCS_URL, LOGO } from "../links";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => setOpen(false), [pathname]);
 
+  // Firm up the bar once the page has moved, so it reads over content.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header className="nav-wrap">
-      <nav className="nav glass" aria-label="Main">
+      <nav className={`nav glass${scrolled ? " scrolled" : ""}`} aria-label="Main">
         <Link to="/" className="brand" aria-label="Rift home">
           <img src={LOGO} width="28" height="28" alt="" className="logo" />
           <span>rift</span>

@@ -33,6 +33,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="section">
       <div className="wrap narrow">
+        <p className="eyebrow">FAQ</p>
         <h2 className="h2">Questions</h2>
         <div className="glass faq">
           {FAQ_ITEMS.map((item, i) => (

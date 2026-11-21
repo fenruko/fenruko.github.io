@@ -39,6 +39,8 @@ export default function Footer() {
       <div className="wrap footer-base muted small">
         <span>&copy; {new Date().getFullYear()} Rift</span>
       </div>
+
+      <div className="footer-mark" aria-hidden="true">rift</div>
     </footer>
   );
 }
